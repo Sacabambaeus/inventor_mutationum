@@ -92,30 +92,32 @@ Mammal-list citation, preserved in its supplied form:
 
 > 川田伸一郎・岩佐真宏・福井　大・新宅勇太・天野雅男・下稲葉さやか・樽　創・姉崎智子・鈴木　聡・押田龍夫・横畑泰志.　2021.　世界哺乳類標準和名リスト２０２１年度版.URL：https://www.mammalogy.jp/list/index.html
 
-## Release history
+## Archived versions and release history
+
+`main` contains the current release HTML and Japanese/English READMEs. Browse [version tags](https://github.com/Sacabambaeus/inventor_mutationum/tags) for earlier releases. Links to older versions below are pinned to their corresponding tags.
 
 | Version | Main additions and fixes |
 | --- | --- |
 | [2.14.0](inventor_mutationum_2.14.0/inventor_mutationum_2.14.0.html) | Add BirT, uCeta, Ceph16S-M, V16S-U and MiDeca: 5 pairs / 10 primers |
-| [2.13.1](inventor_mutationum_2.13.1/inventor_mutationum_2.13.1.html) | Embed a bilingual standalone Sources panel |
-| [2.13.0](inventor_mutationum_2.13.0/inventor_mutationum_2.13.0.html) | Supplement 1,039 Japanese names from checklists and mammal Excel, reaching 6,571 |
-| [2.12.1](inventor_mutationum_2.12.1/inventor_mutationum_2.12.1.html) | Supplement 1,069 missing species labels from DBCLS |
-| [2.12.0](inventor_mutationum_2.12.0/inventor_mutationum_2.12.0.html) | Adopt NMNS/BISMaL Japanese-name authorities with individual evidence |
-| [2.11.2](inventor_mutationum_2.11.2/inventor_mutationum_2.11.2.html) | Separate taxonomy and displayed-primer controls |
-| [2.11.1](inventor_mutationum_2.11.1/inventor_mutationum_2.11.1.html) | Multiple template selection, individual removal and manual-input retention |
-| [2.11.0](inventor_mutationum_2.11.0/inventor_mutationum_2.11.0.html) | Raise alignment capacity and add 3 MiMammal pairs |
-| [2.10.0](inventor_mutationum_2.10.0/inventor_mutationum_2.10.0.html) | Parallel computation using up to 8 workers |
-| [2.9.0](inventor_mutationum_2.9.0/inventor_mutationum_2.9.0.html) | Default to all regions and an expanded Results panel |
-| [2.8.1](inventor_mutationum_2.8.1/inventor_mutationum_2.8.1.html) | Retain selected taxa across primer changes and reruns |
-| [2.8.0](inventor_mutationum_2.8.0/inventor_mutationum_2.8.0.html) | Advanced options, paired input table, GBIF names and Details |
-| [2.7.2](inventor_mutationum_2.7.2/inventor_mutationum_2.7.2.html) | Simplify charts to perfect-match versus other categories |
-| [2.7.1](inventor_mutationum_2.7.1/inventor_mutationum_2.7.1.html) | Simplify matching and threshold explanations |
-| [2.7.0](inventor_mutationum_2.7.0/inventor_mutationum_2.7.0.html) | Green perfect-match cards and taxonomic horizontal bar charts |
-| [2.6.0](inventor_mutationum_2.6.0/inventor_mutationum_2.6.0.html) | Expand Porifera to 9,595 regions, total 32,732 |
-| [2.5.1](inventor_mutationum_2.5.1/inventor_mutationum_2.5.1.html) | Integrate Porifera into standard taxonomy and built-in alignment |
-| [2.5.0](inventor_mutationum_2.5.0/inventor_mutationum_2.5.0.html) | Add 143 Porifera references |
-| [2.4.0](inventor_mutationum_2.4.0/inventor_mutationum_2.4.0.html) | CSV formula protection, input bounds, aggregation and import-race fixes |
-| [2.3.0](inventor_mutationum_2.3.0.html) | Existing baseline release |
+| [2.13.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.13.1/inventor_mutationum_2.13.1/inventor_mutationum_2.13.1.html) | Embed a bilingual standalone Sources panel |
+| [2.13.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.13.0/inventor_mutationum_2.13.0/inventor_mutationum_2.13.0.html) | Supplement 1,039 Japanese names from checklists and mammal Excel, reaching 6,571 |
+| [2.12.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.12.1/inventor_mutationum_2.12.1/inventor_mutationum_2.12.1.html) | Supplement 1,069 missing species labels from DBCLS |
+| [2.12.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.12.0/inventor_mutationum_2.12.0/inventor_mutationum_2.12.0.html) | Adopt NMNS/BISMaL Japanese-name authorities with individual evidence |
+| [2.11.2](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.11.2/inventor_mutationum_2.11.2/inventor_mutationum_2.11.2.html) | Separate taxonomy and displayed-primer controls |
+| [2.11.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.11.1/inventor_mutationum_2.11.1/inventor_mutationum_2.11.1.html) | Multiple template selection, individual removal and manual-input retention |
+| [2.11.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.11.0/inventor_mutationum_2.11.0/inventor_mutationum_2.11.0.html) | Raise alignment capacity and add 3 MiMammal pairs |
+| [2.10.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.10.0/inventor_mutationum_2.10.0/inventor_mutationum_2.10.0.html) | Parallel computation using up to 8 workers |
+| [2.9.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.9.0/inventor_mutationum_2.9.0/inventor_mutationum_2.9.0.html) | Default to all regions and an expanded Results panel |
+| [2.8.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.8.1/inventor_mutationum_2.8.1/inventor_mutationum_2.8.1.html) | Retain selected taxa across primer changes and reruns |
+| [2.8.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.8.0/inventor_mutationum_2.8.0/inventor_mutationum_2.8.0.html) | Advanced options, paired input table, GBIF names and Details |
+| [2.7.2](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.7.2/inventor_mutationum_2.7.2/inventor_mutationum_2.7.2.html) | Simplify charts to perfect-match versus other categories |
+| [2.7.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.7.1/inventor_mutationum_2.7.1/inventor_mutationum_2.7.1.html) | Simplify matching and threshold explanations |
+| [2.7.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.7.0/inventor_mutationum_2.7.0/inventor_mutationum_2.7.0.html) | Green perfect-match cards and taxonomic horizontal bar charts |
+| [2.6.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.6.0/inventor_mutationum_2.6.0/inventor_mutationum_2.6.0.html) | Expand Porifera to 9,595 regions, total 32,732 |
+| [2.5.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.5.1/inventor_mutationum_2.5.1/inventor_mutationum_2.5.1.html) | Integrate Porifera into standard taxonomy and built-in alignment |
+| [2.5.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.5.0/inventor_mutationum_2.5.0/inventor_mutationum_2.5.0.html) | Add 143 Porifera references |
+| [2.4.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.4.0/inventor_mutationum_2.4.0/inventor_mutationum_2.4.0.html) | CSV formula protection, input bounds, aggregation and import-race fixes |
+| [2.3.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.3.0/inventor_mutationum_2.3.0.html) | Existing baseline release |
 
 ## Validation record
 
@@ -123,6 +125,6 @@ Saved v2.14.0 validation passed 76 browser checks and 26 integrity checks. The a
 
 ## Repository contents
 
-Tracked contents are the versioned release HTMLs and Japanese/English READMEs. Original Excel workbooks, companion datasets, build source, validation artifacts and conversation logs are outside this distribution. The current HTML directly displays source descriptions and additional-primer provenance.
+`main` tracks only three files: the current v2.14.0 HTML and the Japanese/English READMEs. Earlier versions are retained through tags and commit history. Original Excel workbooks, companion datasets, build source, validation artifacts and conversation logs are outside this distribution. The current HTML directly displays source descriptions and additional-primer provenance.
 
 Calculation and file reading take place inside the browser. Following an external source link navigates to the respective website.

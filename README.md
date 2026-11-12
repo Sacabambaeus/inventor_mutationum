@@ -92,30 +92,32 @@ ForwardとReverseは、それぞれ独立して参照配列へ照合します。
 
 > 川田伸一郎・岩佐真宏・福井　大・新宅勇太・天野雅男・下稲葉さやか・樽　創・姉崎智子・鈴木　聡・押田龍夫・横畑泰志.　2021.　世界哺乳類標準和名リスト２０２１年度版.URL：https://www.mammalogy.jp/list/index.html
 
-## 版ごとの改善
+## 過去版の取得と改善履歴
+
+`main`には現行版のHTMLと日英READMEを置いています。過去版は[タグ一覧](https://github.com/Sacabambaeus/inventor_mutationum/tags)から参照できます。下表の過去版リンクは、それぞれの版のタグに固定しています。
 
 | 版 | 主な追加・修正 |
 | --- | --- |
 | [2.14.0](inventor_mutationum_2.14.0/inventor_mutationum_2.14.0.html) | BirT・uCeta・Ceph16S-M・V16S-U・MiDecaの5組10本を追加 |
-| [2.13.1](inventor_mutationum_2.13.1/inventor_mutationum_2.13.1.html) | 出典一覧をHTMLへ直接収録し、日本語・英語の単体閲覧に対応 |
-| [2.13.0](inventor_mutationum_2.13.0/inventor_mutationum_2.13.0.html) | 各学会目録・哺乳類Excelで和名1,039組を補完、計6,571組 |
-| [2.12.1](inventor_mutationum_2.12.1/inventor_mutationum_2.12.1.html) | DBCLSで未確定の種名1,069組を補完 |
-| [2.12.0](inventor_mutationum_2.12.0/inventor_mutationum_2.12.0.html) | 和名の基準を科博・BISMaLへ変更し、個別の採用根拠を保存 |
-| [2.11.2](inventor_mutationum_2.11.2/inventor_mutationum_2.11.2.html) | 分類群と表示プライマーを独立した操作枠へ分離 |
-| [2.11.1](inventor_mutationum_2.11.1/inventor_mutationum_2.11.1.html) | 複数テンプレートの追加・個別解除・手入力保持 |
-| [2.11.0](inventor_mutationum_2.11.0/inventor_mutationum_2.11.0.html) | 照合量上限を拡大し、MiMammal3組を追加 |
-| [2.10.0](inventor_mutationum_2.10.0/inventor_mutationum_2.10.0.html) | 最大8ワーカーによる並列計算 |
-| [2.9.0](inventor_mutationum_2.9.0/inventor_mutationum_2.9.0.html) | 全領域を初期選択し、初期展開の結果タブを追加 |
-| [2.8.1](inventor_mutationum_2.8.1/inventor_mutationum_2.8.1.html) | プライマー切替・再計算時の分類群選択を保持 |
-| [2.8.0](inventor_mutationum_2.8.0/inventor_mutationum_2.8.0.html) | 高度なオプション、表形式入力、GBIF和名、詳細パネル |
-| [2.7.2](inventor_mutationum_2.7.2/inventor_mutationum_2.7.2.html) | 棒グラフを完全一致とそれ以外の2区分へ簡略化 |
-| [2.7.1](inventor_mutationum_2.7.1/inventor_mutationum_2.7.1.html) | 一致・閾値の説明を平易な表現へ変更 |
-| [2.7.0](inventor_mutationum_2.7.0/inventor_mutationum_2.7.0.html) | 完全一致カードの緑色化、分類階層別の横棒グラフ |
-| [2.6.0](inventor_mutationum_2.6.0/inventor_mutationum_2.6.0.html) | 海綿動物参照を9,595領域へ拡充、全体32,732領域 |
-| [2.5.1](inventor_mutationum_2.5.1/inventor_mutationum_2.5.1.html) | 海綿動物を通常の分類選択・共通の内蔵照合へ統合 |
-| [2.5.0](inventor_mutationum_2.5.0/inventor_mutationum_2.5.0.html) | 海綿動物143参照を追加 |
-| [2.4.0](inventor_mutationum_2.4.0/inventor_mutationum_2.4.0.html) | CSV数式対策、入力上限、大量集計・読込競合の修正 |
-| [2.3.0](inventor_mutationum_2.3.0.html) | このリポジトリの基準となる既存版 |
+| [2.13.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.13.1/inventor_mutationum_2.13.1/inventor_mutationum_2.13.1.html) | 出典一覧をHTMLへ直接収録し、日本語・英語の単体閲覧に対応 |
+| [2.13.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.13.0/inventor_mutationum_2.13.0/inventor_mutationum_2.13.0.html) | 各学会目録・哺乳類Excelで和名1,039組を補完、計6,571組 |
+| [2.12.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.12.1/inventor_mutationum_2.12.1/inventor_mutationum_2.12.1.html) | DBCLSで未確定の種名1,069組を補完 |
+| [2.12.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.12.0/inventor_mutationum_2.12.0/inventor_mutationum_2.12.0.html) | 和名の基準を科博・BISMaLへ変更し、個別の採用根拠を保存 |
+| [2.11.2](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.11.2/inventor_mutationum_2.11.2/inventor_mutationum_2.11.2.html) | 分類群と表示プライマーを独立した操作枠へ分離 |
+| [2.11.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.11.1/inventor_mutationum_2.11.1/inventor_mutationum_2.11.1.html) | 複数テンプレートの追加・個別解除・手入力保持 |
+| [2.11.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.11.0/inventor_mutationum_2.11.0/inventor_mutationum_2.11.0.html) | 照合量上限を拡大し、MiMammal3組を追加 |
+| [2.10.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.10.0/inventor_mutationum_2.10.0/inventor_mutationum_2.10.0.html) | 最大8ワーカーによる並列計算 |
+| [2.9.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.9.0/inventor_mutationum_2.9.0/inventor_mutationum_2.9.0.html) | 全領域を初期選択し、初期展開の結果タブを追加 |
+| [2.8.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.8.1/inventor_mutationum_2.8.1/inventor_mutationum_2.8.1.html) | プライマー切替・再計算時の分類群選択を保持 |
+| [2.8.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.8.0/inventor_mutationum_2.8.0/inventor_mutationum_2.8.0.html) | 高度なオプション、表形式入力、GBIF和名、詳細パネル |
+| [2.7.2](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.7.2/inventor_mutationum_2.7.2/inventor_mutationum_2.7.2.html) | 棒グラフを完全一致とそれ以外の2区分へ簡略化 |
+| [2.7.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.7.1/inventor_mutationum_2.7.1/inventor_mutationum_2.7.1.html) | 一致・閾値の説明を平易な表現へ変更 |
+| [2.7.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.7.0/inventor_mutationum_2.7.0/inventor_mutationum_2.7.0.html) | 完全一致カードの緑色化、分類階層別の横棒グラフ |
+| [2.6.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.6.0/inventor_mutationum_2.6.0/inventor_mutationum_2.6.0.html) | 海綿動物参照を9,595領域へ拡充、全体32,732領域 |
+| [2.5.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.5.1/inventor_mutationum_2.5.1/inventor_mutationum_2.5.1.html) | 海綿動物を通常の分類選択・共通の内蔵照合へ統合 |
+| [2.5.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.5.0/inventor_mutationum_2.5.0/inventor_mutationum_2.5.0.html) | 海綿動物143参照を追加 |
+| [2.4.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.4.0/inventor_mutationum_2.4.0/inventor_mutationum_2.4.0.html) | CSV数式対策、入力上限、大量集計・読込競合の修正 |
+| [2.3.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.3.0/inventor_mutationum_2.3.0.html) | このリポジトリの基準となる既存版 |
 
 ## 検証記録
 
@@ -123,6 +125,6 @@ v2.14.0の保存済み検証では、ブラウザ76項目・整合性26項目が
 
 ## このリポジトリの内容
 
-追跡対象は、版別の配布用HTMLと日英READMEです。元Excel、別添データ、ビルド用ソース、検証成果物、会話ログは配布対象に含めていません。出典の本文と追加プライマーの原資料情報は、現行HTML内で閲覧できます。
+`main`の追跡対象は、現行版v2.14.0のHTMLと日英READMEの3ファイルです。過去の版はタグとコミット履歴に保持しています。元Excel、別添データ、ビルド用ソース、検証成果物、会話ログは配布対象に含めていません。出典の本文と追加プライマーの原資料情報は、現行HTML内で閲覧できます。
 
 計算・ファイル読込はブラウザ内で処理します。出典の外部リンクを開く操作では、リンク先のサイトへ移動します。
