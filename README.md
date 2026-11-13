@@ -4,13 +4,13 @@
 
 プライマーと参照配列の一致率・変異パターンを、分類階層ごとに確認するブラウザツールです。配列データと照合処理をHTMLに収録しているため、ダウンロードしたHTML単体でオフライン実行できます。
 
-**現行版：[v2.14.0](inventor_mutationum_2.14.0/inventor_mutationum_2.14.0.html)**
+**現行版：[v2.14.1](inventor_mutationum_2.14.1/inventor_mutationum_2.14.1.html)**
 
 ## 起動方法
 
 1. 手元のPCのブラウザで、このリポジトリの **Code → Download ZIP** からファイルを取得します。
 2. ZIPを展開します。
-3. `inventor_mutationum_2.14.0`フォルダ内の`inventor_mutationum_2.14.0.html`をブラウザで開きます。Google Chromeで動作確認しています。
+3. `inventor_mutationum_2.14.1`フォルダ内の`inventor_mutationum_2.14.1.html`をブラウザで開きます。Google Chromeで動作確認しています。
 
 Pythonやサーバーの起動は不要です。実行するファイルはダウンロードしたHTMLです。現行HTMLのサイズは約82.5 MiBです。
 
@@ -28,13 +28,13 @@ CSV（和名付き日本語／英語キー）、選択領域FASTA、印刷にも
 
 ## 収録範囲と設定
 
-| 項目 | v2.14.0の内容 |
+| 項目 | v2.14.1の内容 |
 | --- | --- |
 | 対象領域 | 16S・12S・18S・COI |
 | 参照領域数 | 32,732記録 |
 | 収録する門 | 脊索動物・軟体動物・節足動物・刺胞動物・環形動物・海綿動物 |
 | 和名対応数 | 6,571組（階級と学名の組） |
-| テンプレート | 14ボタン。MiMammalの一括・個別ボタンは同じ3組を共有 |
+| テンプレート | 15ボタン。MiMammalの一括・個別ボタンは同じ3組を共有 |
 | 同時入力 | 最大8組、Forward・Reverse合計16本 |
 | プライマー長 | 8–80塩基、DNA/IUPAC縮重塩基に対応 |
 | 並列計算 | 自動で最大8ワーカー、または1・2・4・8を指定 |
@@ -56,10 +56,13 @@ CSV（和名付き日本語／英語キー）、選択領域FASTA、印刷にも
 | Ceph16S-M | 16S | v2.14.0で追加。領域は利用者資料の名称に基づく設定 |
 | V16S-U | 16S | v2.14.0で追加 |
 | MiDeca | 16S | v2.14.0で追加 |
+| Scle_12S | 12S | v2.14.1で追加。イシサンゴ類 |
 
 初期状態では、すべてのテンプレートが未選択です。複数ボタンを選ぶと行を追加し、同じボタンを再度押すとその組を解除します。MiMammalの一括・個別選択で同じ組を重複追加しません。12Sと16Sのテンプレートを組み合わせると、対象領域を全領域へ切り替えます。
 
 v2.14.0で追加した5組の配列は、利用者提供のExcelから取得し、IUPAC縮重塩基を含めてそのまま登録しています。元のプライマー名・シート・セルと、対象領域の確認資料はHTML内の「出典一覧」で確認できます。Ceph16S-Mについては、同配列の原著文献が未確認であることも明記しています。
+
+Scle_12Sは、利用者提示配列を[Nishitsujiほか（2023）](https://doi.org/10.1098/rspb.2023.0026)の方法欄2(b)と照合して追加しています。Forward `CCAGCMGACGCGGTRANACTTA`、Reverse `AAWTTGACGACGGCCATGC`（ともに5′→3′）です。元の名称と書誌情報は「出典一覧」に収録しています。
 
 ## 結果の読み方
 
@@ -98,7 +101,8 @@ ForwardとReverseは、それぞれ独立して参照配列へ照合します。
 
 | 版 | 主な追加・修正 |
 | --- | --- |
-| [2.14.0](inventor_mutationum_2.14.0/inventor_mutationum_2.14.0.html) | BirT・uCeta・Ceph16S-M・V16S-U・MiDecaの5組10本を追加 |
+| [2.14.1](inventor_mutationum_2.14.1/inventor_mutationum_2.14.1.html) | Scle_12Sの1組2本を追加し、日英出典一覧へ論文情報を収録 |
+| [2.14.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.14.0/inventor_mutationum_2.14.0/inventor_mutationum_2.14.0.html) | BirT・uCeta・Ceph16S-M・V16S-U・MiDecaの5組10本を追加 |
 | [2.13.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.13.1/inventor_mutationum_2.13.1/inventor_mutationum_2.13.1.html) | 出典一覧をHTMLへ直接収録し、日本語・英語の単体閲覧に対応 |
 | [2.13.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.13.0/inventor_mutationum_2.13.0/inventor_mutationum_2.13.0.html) | 各学会目録・哺乳類Excelで和名1,039組を補完、計6,571組 |
 | [2.12.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.12.1/inventor_mutationum_2.12.1/inventor_mutationum_2.12.1.html) | DBCLSで未確定の種名1,069組を補完 |
@@ -121,10 +125,10 @@ ForwardとReverseは、それぞれ独立して参照配列へ照合します。
 
 ## 検証記録
 
-v2.14.0の保存済み検証では、ブラウザ76項目・整合性26項目が成功しています。追加10本を全32,732参照へ照合し、327,320件の計算完了を確認しました。これは実験での増幅性能の保証ではありません。
+v2.14.1の保存済み検証では、ブラウザ24項目・整合性18項目が成功しています。追加2本を全32,732参照へ照合し、65,464件の計算完了を確認しました。これは実験での増幅性能の保証ではありません。
 
 ## このリポジトリの内容
 
-`main`の追跡対象は、現行版v2.14.0のHTMLと日英READMEの3ファイルです。過去の版はタグとコミット履歴に保持しています。元Excel、別添データ、ビルド用ソース、検証成果物、会話ログは配布対象に含めていません。出典の本文と追加プライマーの原資料情報は、現行HTML内で閲覧できます。
+`main`の追跡対象は、現行版v2.14.1のHTMLと日英READMEの3ファイルです。過去の版はタグとコミット履歴に保持しています。元Excel、別添データ、ビルド用ソース、検証成果物、会話ログは配布対象に含めていません。出典の本文と追加プライマーの原資料情報は、現行HTML内で閲覧できます。
 
 計算・ファイル読込はブラウザ内で処理します。出典の外部リンクを開く操作では、リンク先のサイトへ移動します。

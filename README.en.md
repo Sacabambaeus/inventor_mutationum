@@ -4,13 +4,13 @@
 
 A browser tool for comparing primers with reference sequences and inspecting identity, mutation patterns and taxonomic distributions. Reference data and alignment code are embedded in the HTML, so a downloaded HTML file runs offline on its own.
 
-**Current release: [v2.14.0](inventor_mutationum_2.14.0/inventor_mutationum_2.14.0.html)**
+**Current release: [v2.14.1](inventor_mutationum_2.14.1/inventor_mutationum_2.14.1.html)**
 
 ## Getting started
 
 1. On your own PC, download this repository using **Code → Download ZIP**.
 2. Extract the ZIP archive.
-3. Open `inventor_mutationum_2.14.0/inventor_mutationum_2.14.0.html` in a browser. Google Chrome has been used for validation.
+3. Open `inventor_mutationum_2.14.1/inventor_mutationum_2.14.1.html` in a browser. Google Chrome has been used for validation.
 
 No Python installation or local server is required. Run the downloaded HTML file. The current HTML is approximately 82.5 MiB.
 
@@ -28,13 +28,13 @@ Exports include CSV with Japanese labels or English keys, selected-region FASTA,
 
 ## Included data and settings
 
-| Item | v2.14.0 |
+| Item | v2.14.1 |
 | --- | --- |
 | Regions | 16S, 12S, 18S and COI |
 | Reference regions | 32,732 records |
 | Phyla | Chordata, Mollusca, Arthropoda, Cnidaria, Annelida and Porifera |
 | Japanese labels | 6,571 rank/scientific-name mappings |
-| Templates | 14 buttons; the MiMammal bundle and individual buttons share the same three pairs |
+| Templates | 15 buttons; the MiMammal bundle and individual buttons share the same three pairs |
 | Simultaneous input | Up to 8 pairs / 16 Forward and Reverse primers combined |
 | Primer length | 8–80 bases; DNA/IUPAC degeneracy supported |
 | Parallelism | Automatic up to 8 workers, or manually 1, 2, 4 or 8 |
@@ -56,10 +56,13 @@ The included data are saved snapshots. Counts describe this selected reference p
 | Ceph16S-M | 16S | Added in v2.14.0; region follows the supplied primer name |
 | V16S-U | 16S | Added in v2.14.0 |
 | MiDeca | 16S | Added in v2.14.0 |
+| Scle_12S | 12S | Added in v2.14.1; scleractinian corals |
 
 All templates start unselected. Select multiple buttons to add rows; click a selected button again to remove its pair. MiMammal bundle/individual choices do not duplicate the same named pair. Combining 12S and 16S templates switches the region scope to all regions.
 
 The five pairs added in v2.14.0 preserve the supplied Excel sequences, including all IUPAC bases. Original primer names, sheets, cells and region evidence are embedded in Sources. Ceph16S-M is explicitly marked as lacking a confirmed original publication for the exact supplied sequences.
+
+Scle_12S was added from the supplied sequences, checked against Methods 2(b) in [Nishitsuji et al. (2023)](https://doi.org/10.1098/rspb.2023.0026). Forward: `CCAGCMGACGCGGTRANACTTA`; Reverse: `AAWTTGACGACGGCCATGC` (both 5′→3′). Original primer names and the full citation are embedded in Sources.
 
 ## Interpreting results
 
@@ -98,7 +101,8 @@ Mammal-list citation, preserved in its supplied form:
 
 | Version | Main additions and fixes |
 | --- | --- |
-| [2.14.0](inventor_mutationum_2.14.0/inventor_mutationum_2.14.0.html) | Add BirT, uCeta, Ceph16S-M, V16S-U and MiDeca: 5 pairs / 10 primers |
+| [2.14.1](inventor_mutationum_2.14.1/inventor_mutationum_2.14.1.html) | Add Scle_12S, one pair/two primers, with bilingual embedded citation |
+| [2.14.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.14.0/inventor_mutationum_2.14.0/inventor_mutationum_2.14.0.html) | Add BirT, uCeta, Ceph16S-M, V16S-U and MiDeca: 5 pairs / 10 primers |
 | [2.13.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.13.1/inventor_mutationum_2.13.1/inventor_mutationum_2.13.1.html) | Embed a bilingual standalone Sources panel |
 | [2.13.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.13.0/inventor_mutationum_2.13.0/inventor_mutationum_2.13.0.html) | Supplement 1,039 Japanese names from checklists and mammal Excel, reaching 6,571 |
 | [2.12.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.12.1/inventor_mutationum_2.12.1/inventor_mutationum_2.12.1.html) | Supplement 1,069 missing species labels from DBCLS |
@@ -121,10 +125,10 @@ Mammal-list citation, preserved in its supplied form:
 
 ## Validation record
 
-Saved v2.14.0 validation passed 76 browser checks and 26 integrity checks. The additional ten primers completed 327,320 calls across all 32,732 references. This is computational validation, not a guarantee of experimental amplification.
+Saved v2.14.1 validation passed 24 browser checks and 18 integrity checks. The additional two primers completed 65,464 calls across all 32,732 references. This is computational validation, not a guarantee of experimental amplification.
 
 ## Repository contents
 
-`main` tracks only three files: the current v2.14.0 HTML and the Japanese/English READMEs. Earlier versions are retained through tags and commit history. Original Excel workbooks, companion datasets, build source, validation artifacts and conversation logs are outside this distribution. The current HTML directly displays source descriptions and additional-primer provenance.
+`main` tracks only three files: the current v2.14.1 HTML and the Japanese/English READMEs. Earlier versions are retained through tags and commit history. Original Excel workbooks, companion datasets, build source, validation artifacts and conversation logs are outside this distribution. The current HTML directly displays source descriptions and additional-primer provenance.
 
 Calculation and file reading take place inside the browser. Following an external source link navigates to the respective website.
