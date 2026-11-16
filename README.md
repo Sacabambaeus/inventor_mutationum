@@ -6,7 +6,7 @@
 
 プライマーと参照配列の一致率・変異パターンを、分類階層ごとに確認するブラウザツールです。配列データと照合処理をHTMLに収録しているため、ダウンロードしたHTML単体でオフライン実行できます。
 
-**現行版：[v2.15.0](inventor_mutationum_2.15.0/inventor_mutationum_2.15.0.html)**
+**ツール：[PriMatch](primatch.html)**
 
 [公開ページでPriMatchを開く](https://sacabambaeus.github.io/inventor_mutationum/)
 
@@ -14,7 +14,7 @@
 
 1. 手元のPCのブラウザで、このリポジトリの **Code → Download ZIP** からファイルを取得します。
 2. ZIPを展開します。
-3. `inventor_mutationum_2.15.0`フォルダ内の`inventor_mutationum_2.15.0.html`をブラウザで開きます。Google Chromeで動作確認しています。
+3. `primatch.html`をブラウザで開きます。Google Chromeで動作確認しています。
 
 Pythonやサーバーの起動は不要です。実行するファイルはダウンロードしたHTMLです。現行HTMLのサイズは約82.5 MiBです。
 
@@ -32,7 +32,7 @@ CSV（和名付き日本語／英語キー）、選択領域FASTA、印刷にも
 
 ## 収録範囲と設定
 
-| 項目 | v2.15.0の内容 |
+| 項目 | 内容 |
 | --- | --- |
 | 対象領域 | 16S・12S・18S・COI |
 | 参照領域数 | 32,732記録 |
@@ -55,16 +55,16 @@ CSV（和名付き日本語／英語キー）、選択領域FASTA、印刷にも
 | 16Sarbr | 16S | 1組 |
 | MiMammal（3組） | 12S | MiMammal-1・2・3を一括追加 |
 | MiMammal-1・MiMammal-2・MiMammal-3 | 12S | 各組を個別追加 |
-| BirT | 12S | v2.14.0で追加 |
-| uCeta | 12S | v2.14.0で追加。文献上の名称はμCeta |
-| Ceph16S-M | 16S | v2.14.0で追加。領域は利用者資料の名称に基づく設定 |
-| V16S-U | 16S | v2.14.0で追加 |
-| MiDeca | 16S | v2.14.0で追加 |
-| Scle_12S | 12S | v2.14.1で追加。イシサンゴ類 |
+| BirT | 12S | 1組 |
+| uCeta | 12S | 文献上の名称はμCeta |
+| Ceph16S-M | 16S | 領域は利用者資料の名称に基づく設定 |
+| V16S-U | 16S | 1組 |
+| MiDeca | 16S | 1組 |
+| Scle_12S | 12S | イシサンゴ類 |
 
 初期状態では、すべてのテンプレートが未選択です。複数ボタンを選ぶと行を追加し、同じボタンを再度押すとその組を解除します。MiMammalの一括・個別選択で同じ組を重複追加しません。12Sと16Sのテンプレートを組み合わせると、対象領域を全領域へ切り替えます。
 
-v2.14.0で追加した5組の配列は、利用者提供のExcelから取得し、IUPAC縮重塩基を含めてそのまま登録しています。元のプライマー名・シート・セルと、対象領域の確認資料はHTML内の「出典一覧」で確認できます。Ceph16S-Mについては、同配列の原著文献が未確認であることも明記しています。
+BirT・uCeta・Ceph16S-M・V16S-U・MiDecaの5組の配列は、利用者提供のExcelから取得し、IUPAC縮重塩基を含めてそのまま登録しています。元のプライマー名・シート・セルと、対象領域の確認資料はHTML内の「出典一覧」で確認できます。Ceph16S-Mについては、同配列の原著文献が未確認であることも明記しています。
 
 Scle_12Sは、利用者提示配列を[Nishitsujiほか（2023）](https://doi.org/10.1098/rspb.2023.0026)の方法欄2(b)と照合して追加しています。Forward `CCAGCMGACGCGGTRANACTTA`、Reverse `AAWTTGACGACGGCCATGC`（ともに5′→3′）です。元の名称と書誌情報は「出典一覧」に収録しています。
 
@@ -99,41 +99,16 @@ ForwardとReverseは、それぞれ独立して参照配列へ照合します。
 
 > 川田伸一郎・岩佐真宏・福井　大・新宅勇太・天野雅男・下稲葉さやか・樽　創・姉崎智子・鈴木　聡・押田龍夫・横畑泰志.　2021.　世界哺乳類標準和名リスト２０２１年度版.URL：https://www.mammalogy.jp/list/index.html
 
-## 過去版の取得と改善履歴
+## 変更履歴
 
-`main`には現行版のHTMLと日英READMEを置いています。過去版は[タグ一覧](https://github.com/Sacabambaeus/inventor_mutationum/tags)から参照できます。下表の過去版リンクは、それぞれの版のタグに固定しています。
-
-| 版 | 主な追加・修正 |
-| --- | --- |
-| [2.15.0](inventor_mutationum_2.15.0/inventor_mutationum_2.15.0.html) | 表示名をPriMatchへ変更し、日本語副題と公開入口を追加 |
-| [2.14.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.14.1/inventor_mutationum_2.14.1/inventor_mutationum_2.14.1.html) | Scle_12Sの1組2本を追加し、日英出典一覧へ論文情報を収録 |
-| [2.14.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.14.0/inventor_mutationum_2.14.0/inventor_mutationum_2.14.0.html) | BirT・uCeta・Ceph16S-M・V16S-U・MiDecaの5組10本を追加 |
-| [2.13.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.13.1/inventor_mutationum_2.13.1/inventor_mutationum_2.13.1.html) | 出典一覧をHTMLへ直接収録し、日本語・英語の単体閲覧に対応 |
-| [2.13.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.13.0/inventor_mutationum_2.13.0/inventor_mutationum_2.13.0.html) | 各学会目録・哺乳類Excelで和名1,039組を補完、計6,571組 |
-| [2.12.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.12.1/inventor_mutationum_2.12.1/inventor_mutationum_2.12.1.html) | DBCLSで未確定の種名1,069組を補完 |
-| [2.12.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.12.0/inventor_mutationum_2.12.0/inventor_mutationum_2.12.0.html) | 和名の基準を科博・BISMaLへ変更し、個別の採用根拠を保存 |
-| [2.11.2](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.11.2/inventor_mutationum_2.11.2/inventor_mutationum_2.11.2.html) | 分類群と表示プライマーを独立した操作枠へ分離 |
-| [2.11.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.11.1/inventor_mutationum_2.11.1/inventor_mutationum_2.11.1.html) | 複数テンプレートの追加・個別解除・手入力保持 |
-| [2.11.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.11.0/inventor_mutationum_2.11.0/inventor_mutationum_2.11.0.html) | 照合量上限を拡大し、MiMammal3組を追加 |
-| [2.10.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.10.0/inventor_mutationum_2.10.0/inventor_mutationum_2.10.0.html) | 最大8ワーカーによる並列計算 |
-| [2.9.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.9.0/inventor_mutationum_2.9.0/inventor_mutationum_2.9.0.html) | 全領域を初期選択し、初期展開の結果タブを追加 |
-| [2.8.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.8.1/inventor_mutationum_2.8.1/inventor_mutationum_2.8.1.html) | プライマー切替・再計算時の分類群選択を保持 |
-| [2.8.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.8.0/inventor_mutationum_2.8.0/inventor_mutationum_2.8.0.html) | 高度なオプション、表形式入力、GBIF和名、詳細パネル |
-| [2.7.2](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.7.2/inventor_mutationum_2.7.2/inventor_mutationum_2.7.2.html) | 棒グラフを完全一致とそれ以外の2区分へ簡略化 |
-| [2.7.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.7.1/inventor_mutationum_2.7.1/inventor_mutationum_2.7.1.html) | 一致・閾値の説明を平易な表現へ変更 |
-| [2.7.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.7.0/inventor_mutationum_2.7.0/inventor_mutationum_2.7.0.html) | 完全一致カードの緑色化、分類階層別の横棒グラフ |
-| [2.6.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.6.0/inventor_mutationum_2.6.0/inventor_mutationum_2.6.0.html) | 海綿動物参照を9,595領域へ拡充、全体32,732領域 |
-| [2.5.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.5.1/inventor_mutationum_2.5.1/inventor_mutationum_2.5.1.html) | 海綿動物を通常の分類選択・共通の内蔵照合へ統合 |
-| [2.5.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.5.0/inventor_mutationum_2.5.0/inventor_mutationum_2.5.0.html) | 海綿動物143参照を追加 |
-| [2.4.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.4.0/inventor_mutationum_2.4.0/inventor_mutationum_2.4.0.html) | CSV数式対策、入力上限、大量集計・読込競合の修正 |
-| [2.3.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.3.0/inventor_mutationum_2.3.0.html) | このリポジトリの基準となる既存版 |
+変更は[コミット履歴](https://github.com/Sacabambaeus/inventor_mutationum/commits/main/)で管理します。ファイル名は`primatch.html`に固定し、コミット名に版番号を付けず、変更内容を記載します。版番号のタグは使用しません。
 
 ## 検証記録
 
-v2.15.0では表示を確認し、埋込データと全スクリプトがv2.14.1と同一であることを確認しています。v2.14.1の保存済み検証では、ブラウザ24項目・整合性18項目が成功しています。追加2本を全32,732参照へ照合し、65,464件の計算完了を確認しました。これは実験での増幅性能の保証ではありません。
+表示をデスクトップ・モバイルで確認しています。名称変更時には埋込データと全スクリプトが変更前と同一であることを確認しました。Scle_12S追加時の検証では、ブラウザ24項目・整合性18項目が成功し、2本を全32,732参照へ照合して65,464件の計算完了を確認しました。これは実験での増幅性能の保証ではありません。
 
 ## このリポジトリの内容
 
-`main`の追跡対象は、現行版v2.15.0のHTML、公開入口のindex.html、日英READMEの4ファイルです。過去の版はタグとコミット履歴に保持しています。元Excel、別添データ、ビルド用ソース、検証成果物、会話ログは配布対象に含めていません。出典の本文と追加プライマーの原資料情報は、現行HTML内で閲覧できます。
+`main`の追跡対象は、primatch.html、公開入口のindex.html、日英READMEの4ファイルです。過去の変更はコミット履歴から参照できます。元Excel、別添データ、ビルド用ソース、検証成果物、会話ログは配布対象に含めていません。出典の本文と追加プライマーの原資料情報は、現行HTML内で閲覧できます。
 
 計算・ファイル読込はブラウザ内で処理します。出典の外部リンクを開く操作では、リンク先のサイトへ移動します。

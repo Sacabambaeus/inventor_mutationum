@@ -6,7 +6,7 @@
 
 A browser tool for comparing primers with reference sequences and inspecting identity, mutation patterns and taxonomic distributions. Reference data and alignment code are embedded in the HTML, so a downloaded HTML file runs offline on its own.
 
-**Current release: [v2.15.0](inventor_mutationum_2.15.0/inventor_mutationum_2.15.0.html)**
+**Tool: [PriMatch](primatch.html)**
 
 [Open PriMatch online](https://sacabambaeus.github.io/inventor_mutationum/)
 
@@ -14,7 +14,7 @@ A browser tool for comparing primers with reference sequences and inspecting ide
 
 1. On your own PC, download this repository using **Code → Download ZIP**.
 2. Extract the ZIP archive.
-3. Open `inventor_mutationum_2.15.0/inventor_mutationum_2.15.0.html` in a browser. Google Chrome has been used for validation.
+3. Open `primatch.html` in a browser. Google Chrome has been used for validation.
 
 No Python installation or local server is required. Run the downloaded HTML file. The current HTML is approximately 82.5 MiB.
 
@@ -32,7 +32,7 @@ Exports include CSV with Japanese labels or English keys, selected-region FASTA,
 
 ## Included data and settings
 
-| Item | v2.15.0 |
+| Item | Contents |
 | --- | --- |
 | Regions | 16S, 12S, 18S and COI |
 | Reference regions | 32,732 records |
@@ -55,16 +55,16 @@ The included data are saved snapshots. Counts describe this selected reference p
 | 16Sarbr | 16S | One pair |
 | MiMammal（3組） | 12S | Add MiMammal-1, -2 and -3 together |
 | MiMammal-1, MiMammal-2, MiMammal-3 | 12S | Add each pair individually |
-| BirT | 12S | Added in v2.14.0 |
-| uCeta | 12S | Added in v2.14.0; published as μCeta |
-| Ceph16S-M | 16S | Added in v2.14.0; region follows the supplied primer name |
-| V16S-U | 16S | Added in v2.14.0 |
-| MiDeca | 16S | Added in v2.14.0 |
-| Scle_12S | 12S | Added in v2.14.1; scleractinian corals |
+| BirT | 12S | One pair |
+| uCeta | 12S | published as μCeta |
+| Ceph16S-M | 16S | region follows the supplied primer name |
+| V16S-U | 16S | One pair |
+| MiDeca | 16S | One pair |
+| Scle_12S | 12S | scleractinian corals |
 
 All templates start unselected. Select multiple buttons to add rows; click a selected button again to remove its pair. MiMammal bundle/individual choices do not duplicate the same named pair. Combining 12S and 16S templates switches the region scope to all regions.
 
-The five pairs added in v2.14.0 preserve the supplied Excel sequences, including all IUPAC bases. Original primer names, sheets, cells and region evidence are embedded in Sources. Ceph16S-M is explicitly marked as lacking a confirmed original publication for the exact supplied sequences.
+The BirT, uCeta, Ceph16S-M, V16S-U and MiDeca pairs preserve the supplied Excel sequences, including all IUPAC bases. Original primer names, sheets, cells and region evidence are embedded in Sources. Ceph16S-M is explicitly marked as lacking a confirmed original publication for the exact supplied sequences.
 
 Scle_12S was added from the supplied sequences, checked against Methods 2(b) in [Nishitsuji et al. (2023)](https://doi.org/10.1098/rspb.2023.0026). Forward: `CCAGCMGACGCGGTRANACTTA`; Reverse: `AAWTTGACGACGGCCATGC` (both 5′→3′). Original primer names and the full citation are embedded in Sources.
 
@@ -99,41 +99,16 @@ Mammal-list citation, preserved in its supplied form:
 
 > 川田伸一郎・岩佐真宏・福井　大・新宅勇太・天野雅男・下稲葉さやか・樽　創・姉崎智子・鈴木　聡・押田龍夫・横畑泰志.　2021.　世界哺乳類標準和名リスト２０２１年度版.URL：https://www.mammalogy.jp/list/index.html
 
-## Archived versions and release history
+## Change history
 
-`main` contains the current release HTML and Japanese/English READMEs. Browse [version tags](https://github.com/Sacabambaeus/inventor_mutationum/tags) for earlier releases. Links to older versions below are pinned to their corresponding tags.
-
-| Version | Main additions and fixes |
-| --- | --- |
-| [2.15.0](inventor_mutationum_2.15.0/inventor_mutationum_2.15.0.html) | Rename display to PriMatch; add Japanese subtitle and stable public entry |
-| [2.14.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.14.1/inventor_mutationum_2.14.1/inventor_mutationum_2.14.1.html) | Add Scle_12S, one pair/two primers, with bilingual embedded citation |
-| [2.14.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.14.0/inventor_mutationum_2.14.0/inventor_mutationum_2.14.0.html) | Add BirT, uCeta, Ceph16S-M, V16S-U and MiDeca: 5 pairs / 10 primers |
-| [2.13.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.13.1/inventor_mutationum_2.13.1/inventor_mutationum_2.13.1.html) | Embed a bilingual standalone Sources panel |
-| [2.13.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.13.0/inventor_mutationum_2.13.0/inventor_mutationum_2.13.0.html) | Supplement 1,039 Japanese names from checklists and mammal Excel, reaching 6,571 |
-| [2.12.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.12.1/inventor_mutationum_2.12.1/inventor_mutationum_2.12.1.html) | Supplement 1,069 missing species labels from DBCLS |
-| [2.12.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.12.0/inventor_mutationum_2.12.0/inventor_mutationum_2.12.0.html) | Adopt NMNS/BISMaL Japanese-name authorities with individual evidence |
-| [2.11.2](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.11.2/inventor_mutationum_2.11.2/inventor_mutationum_2.11.2.html) | Separate taxonomy and displayed-primer controls |
-| [2.11.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.11.1/inventor_mutationum_2.11.1/inventor_mutationum_2.11.1.html) | Multiple template selection, individual removal and manual-input retention |
-| [2.11.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.11.0/inventor_mutationum_2.11.0/inventor_mutationum_2.11.0.html) | Raise alignment capacity and add 3 MiMammal pairs |
-| [2.10.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.10.0/inventor_mutationum_2.10.0/inventor_mutationum_2.10.0.html) | Parallel computation using up to 8 workers |
-| [2.9.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.9.0/inventor_mutationum_2.9.0/inventor_mutationum_2.9.0.html) | Default to all regions and an expanded Results panel |
-| [2.8.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.8.1/inventor_mutationum_2.8.1/inventor_mutationum_2.8.1.html) | Retain selected taxa across primer changes and reruns |
-| [2.8.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.8.0/inventor_mutationum_2.8.0/inventor_mutationum_2.8.0.html) | Advanced options, paired input table, GBIF names and Details |
-| [2.7.2](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.7.2/inventor_mutationum_2.7.2/inventor_mutationum_2.7.2.html) | Simplify charts to perfect-match versus other categories |
-| [2.7.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.7.1/inventor_mutationum_2.7.1/inventor_mutationum_2.7.1.html) | Simplify matching and threshold explanations |
-| [2.7.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.7.0/inventor_mutationum_2.7.0/inventor_mutationum_2.7.0.html) | Green perfect-match cards and taxonomic horizontal bar charts |
-| [2.6.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.6.0/inventor_mutationum_2.6.0/inventor_mutationum_2.6.0.html) | Expand Porifera to 9,595 regions, total 32,732 |
-| [2.5.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.5.1/inventor_mutationum_2.5.1/inventor_mutationum_2.5.1.html) | Integrate Porifera into standard taxonomy and built-in alignment |
-| [2.5.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.5.0/inventor_mutationum_2.5.0/inventor_mutationum_2.5.0.html) | Add 143 Porifera references |
-| [2.4.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.4.0/inventor_mutationum_2.4.0/inventor_mutationum_2.4.0.html) | CSV formula protection, input bounds, aggregation and import-race fixes |
-| [2.3.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.3.0/inventor_mutationum_2.3.0.html) | Existing baseline release |
+Use the [commit history](https://github.com/Sacabambaeus/inventor_mutationum/commits/main/) to inspect changes. Keep the filename `primatch.html` stable and describe changes in commit messages without version numbers. Version-number tags are not used.
 
 ## Validation record
 
-For v2.15.0, display was checked and all embedded data/scripts were verified identical to v2.14.1. Saved v2.14.1 validation passed 24 browser checks and 18 integrity checks. The additional two primers completed 65,464 calls across all 32,732 references. This is computational validation, not a guarantee of experimental amplification.
+Desktop/mobile display was inspected. All embedded data and scripts were verified unchanged during the naming update. Validation when adding Scle_12S passed 24 browser checks and 18 integrity checks; two primers completed 65,464 calls across all 32,732 references. This is computational validation, not a guarantee of experimental amplification.
 
 ## Repository contents
 
-`main` tracks four files: the current v2.15.0 HTML, the public index.html entry, and the Japanese/English READMEs. Earlier versions are retained through tags and commit history. Original Excel workbooks, companion datasets, build source, validation artifacts and conversation logs are outside this distribution. The current HTML directly displays source descriptions and additional-primer provenance.
+`main` tracks four files: primatch.html, the public index.html entry, and the Japanese/English READMEs. Earlier changes remain available through commit history. Original Excel workbooks, companion datasets, build source, validation artifacts and conversation logs are outside this distribution. The current HTML directly displays source descriptions and additional-primer provenance.
 
 Calculation and file reading take place inside the browser. Following an external source link navigates to the respective website.
