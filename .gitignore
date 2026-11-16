@@ -1,6 +1,7 @@
 # Track distributable files, editable source and contribution infrastructure.
 /*
 !/.gitignore
+!/.gitattributes
 !/.github/
 !/README.md
 !/README.en.md
