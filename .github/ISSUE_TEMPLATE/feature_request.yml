@@ -1,0 +1,20 @@
+name: 改善提案 / Feature request
+description: 利用上の課題と改善案 / Describe a need and proposal
+title: "[提案] "
+body:
+  - type: textarea
+    id: purpose
+    attributes:
+      label: 解決したい課題 / Problem to solve
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 提案する動作 / Proposed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 入力例・出典・補足 / Examples, sources and context

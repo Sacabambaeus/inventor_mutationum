@@ -1,0 +1,31 @@
+name: 不具合報告 / Bug report
+description: 再現手順と結果を報告 / Report a reproducible problem
+title: "[不具合] "
+body:
+  - type: textarea
+    id: steps
+    attributes:
+      label: 再現手順 / Steps to reproduce
+      description: 小さな入力例と選択した設定を記載してください。機密情報は含めないでください。
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待した結果 / Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 実際の結果 / Actual behavior
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: OS・ブラウザ・利用URLまたはコミット / Environment and URL or commit
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 画像・エラー表示 / Screenshots or errors

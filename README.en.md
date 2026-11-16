@@ -1,4 +1,4 @@
-# PriMatch
+# ぷらいまっち！- PriMatch
 
 [日本語](README.md)
 
@@ -99,6 +99,18 @@ Mammal-list citation, preserved in its supplied form:
 
 > 川田伸一郎・岩佐真宏・福井　大・新宅勇太・天野雅男・下稲葉さやか・樽　創・姉崎智子・鈴木　聡・押田龍夫・横畑泰志.　2021.　世界哺乳類標準和名リスト２０２１年度版.URL：https://www.mammalogy.jp/list/index.html
 
+## Development and contributions
+
+Bug reports, suggestions and pull requests are welcome. Read [Contributing](CONTRIBUTING.en.md) and [Building](docs/BUILD.en.md).
+
+```bash
+python3 scripts/build.py
+python3 scripts/build.py --check
+node --test tests/alignment.test.cjs
+```
+
+`src/` contains editable source, `data/` holds compressed reference snapshots, and `scripts/` contains the build. End users still open `primatch.html`.
+
 ## Change history
 
 Use the [commit history](https://github.com/Sacabambaeus/inventor_mutationum/commits/main/) to inspect changes. Keep the filename `primatch.html` stable and describe changes in commit messages without version numbers. Version-number tags are not used.
@@ -109,6 +121,6 @@ Desktop/mobile display was inspected. All embedded data and scripts were verifie
 
 ## Repository contents
 
-`main` tracks four files: primatch.html, the public index.html entry, and the Japanese/English READMEs. Earlier changes remain available through commit history. Original Excel workbooks, companion datasets, build source, validation artifacts and conversation logs are outside this distribution. The current HTML directly displays source descriptions and additional-primer provenance.
+The repository tracks the distributable HTML, public entry, bilingual READMEs, editable source, build script, reference snapshots, alignment tests, contribution guide, Issue/PR templates and CI workflow. Earlier changes remain available through commit history. Supplied original workbooks, working companion datasets, individual validation artifacts and conversation logs remain outside this distribution. The current HTML directly displays source descriptions and additional-primer provenance.
 
 Calculation and file reading take place inside the browser. Following an external source link navigates to the respective website.

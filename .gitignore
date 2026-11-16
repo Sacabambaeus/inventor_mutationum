@@ -1,0 +1,21 @@
+# Track distributable files, editable source and contribution infrastructure.
+/*
+!/.gitignore
+!/.github/
+!/README.md
+!/README.en.md
+!/CONTRIBUTING.md
+!/CONTRIBUTING.en.md
+!/LICENSE
+!/LICENSE.ja.txt
+!/index.html
+!/primatch.html
+!/src/
+!/scripts/
+!/data/
+!/docs/
+!/tests/
+__pycache__/
+*.py[cod]
+.DS_Store
+*.swp

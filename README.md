@@ -1,4 +1,4 @@
-# PriMatch
+# ぷらいまっち！- PriMatch
 
 [English](README.en.md)
 
@@ -99,6 +99,18 @@ ForwardとReverseは、それぞれ独立して参照配列へ照合します。
 
 > 川田伸一郎・岩佐真宏・福井　大・新宅勇太・天野雅男・下稲葉さやか・樽　創・姉崎智子・鈴木　聡・押田龍夫・横畑泰志.　2021.　世界哺乳類標準和名リスト２０２１年度版.URL：https://www.mammalogy.jp/list/index.html
 
+## 開発・コントリビュート
+
+不具合報告・改善提案・プルリクエストを受け付けています。[参加方法](CONTRIBUTING.md)と[ビルド手順](docs/BUILD.md)をご覧ください。
+
+```bash
+python3 scripts/build.py
+python3 scripts/build.py --check
+node --test tests/alignment.test.cjs
+```
+
+`src/`が編集用ソース、`data/`が圧縮した参照スナップショット、`scripts/`がビルド処理です。利用者が開くファイルは`primatch.html`のままです。
+
 ## 変更履歴
 
 変更は[コミット履歴](https://github.com/Sacabambaeus/inventor_mutationum/commits/main/)で管理します。ファイル名は`primatch.html`に固定し、コミット名に版番号を付けず、変更内容を記載します。版番号のタグは使用しません。
@@ -109,6 +121,6 @@ ForwardとReverseは、それぞれ独立して参照配列へ照合します。
 
 ## このリポジトリの内容
 
-`main`の追跡対象は、primatch.html、公開入口のindex.html、日英READMEの4ファイルです。過去の変更はコミット履歴から参照できます。元Excel、別添データ、ビルド用ソース、検証成果物、会話ログは配布対象に含めていません。出典の本文と追加プライマーの原資料情報は、現行HTML内で閲覧できます。
+配布HTML・公開入口・日英READMEに加え、編集用ソース、ビルド処理、参照スナップショット、照合テスト、参加案内、Issue／PRテンプレート、CI設定を追跡しています。過去の変更はコミット履歴から参照できます。利用者提供の元Excel、作業用の別添データ、個別の検証成果物、会話ログは配布対象に含めていません。出典の本文と追加プライマーの原資料情報は、現行HTML内で閲覧できます。
 
 計算・ファイル読込はブラウザ内で処理します。出典の外部リンクを開く操作では、リンク先のサイトへ移動します。
