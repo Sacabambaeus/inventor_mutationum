@@ -12,11 +12,11 @@
 
 ## 起動方法
 
-1. 手元のPCのブラウザで、このリポジトリの **Code → Download ZIP** からファイルを取得します。
-2. ZIPを展開します。
-3. `primatch.html`をブラウザで開きます。Google Chromeで動作確認しています。
+**オンラインで使う：** [PriMatchを開く](https://sacabambaeus.github.io/inventor_mutationum/)をクリックすると、ブラウザでそのまま使用できます。
 
-Pythonやサーバーの起動は不要です。実行するファイルはダウンロードしたHTMLです。現行HTMLのサイズは約82.5 MiBです。
+**オフラインで使う：** [primatch.htmlのファイルページ](https://github.com/Sacabambaeus/inventor_mutationum/blob/main/primatch.html)で **Download raw file（ダウンロードアイコン）** を押して保存し、保存した`primatch.html`をダブルクリックしてブラウザで開きます。
+
+配列データと計算処理を収録した**HTMLファイル一つだけ**で動作します。Google Chromeで動作確認しています。ファイルサイズは約82.5 MiBです。
 
 ## 基本操作
 

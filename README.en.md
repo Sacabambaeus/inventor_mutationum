@@ -12,11 +12,11 @@ A browser tool for comparing primers with reference sequences and inspecting ide
 
 ## Getting started
 
-1. On your own PC, download this repository using **Code → Download ZIP**.
-2. Extract the ZIP archive.
-3. Open `primatch.html` in a browser. Google Chrome has been used for validation.
+**Online:** Click [Open PriMatch](https://sacabambaeus.github.io/inventor_mutationum/) to use it directly in your browser.
 
-No Python installation or local server is required. Run the downloaded HTML file. The current HTML is approximately 82.5 MiB.
+**Offline:** Open the [primatch.html file page](https://github.com/Sacabambaeus/inventor_mutationum/blob/main/primatch.html), click **Download raw file** (the download icon), then double-click the saved `primatch.html` to open it in your browser.
+
+**One HTML file** contains the reference data and calculation code. Google Chrome has been used for validation. The file is approximately 82.5 MiB.
 
 ## Basic workflow
 
