@@ -22,6 +22,8 @@ node --test tests/alignment.test.cjs
 
 通常ビルドは`primatch.html`を生成します。`--check`はファイルを書き換えず、ソースから生成した内容と配布HTMLが完全に一致することを確認します。不一致なら終了コード1を返します。
 
+改行コードは`.gitattributes`でLFに固定しています。この設定より前に取得したWindowsの作業コピーで`--check`が一致しない場合は、`primatch.html`を削除して`git checkout -- primatch.html`で取り直してください。
+
 別の場所へ生成する場合：
 
 ```bash

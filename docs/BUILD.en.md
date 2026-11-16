@@ -22,6 +22,8 @@ node --test tests/alignment.test.cjs
 
 The default command writes `primatch.html`. `--check` writes nothing and verifies exact equality between source output and the distributable HTML; it exits with status 1 on a mismatch.
 
+Line endings are pinned to LF by `.gitattributes`. If `--check` reports a mismatch in a Windows working copy cloned before that file was added, delete `primatch.html` and restore it with `git checkout -- primatch.html`.
+
 To generate another output:
 
 ```bash
