@@ -1,16 +1,20 @@
-# Inventor_mutationum
+# PriMatch
 
 [English](README.en.md)
 
+**分類群ごとにプライマーと参照配列の一致を可視化**
+
 プライマーと参照配列の一致率・変異パターンを、分類階層ごとに確認するブラウザツールです。配列データと照合処理をHTMLに収録しているため、ダウンロードしたHTML単体でオフライン実行できます。
 
-**現行版：[v2.14.1](inventor_mutationum_2.14.1/inventor_mutationum_2.14.1.html)**
+**現行版：[v2.15.0](inventor_mutationum_2.15.0/inventor_mutationum_2.15.0.html)**
+
+[公開ページでPriMatchを開く](https://sacabambaeus.github.io/inventor_mutationum/)
 
 ## 起動方法
 
 1. 手元のPCのブラウザで、このリポジトリの **Code → Download ZIP** からファイルを取得します。
 2. ZIPを展開します。
-3. `inventor_mutationum_2.14.1`フォルダ内の`inventor_mutationum_2.14.1.html`をブラウザで開きます。Google Chromeで動作確認しています。
+3. `inventor_mutationum_2.15.0`フォルダ内の`inventor_mutationum_2.15.0.html`をブラウザで開きます。Google Chromeで動作確認しています。
 
 Pythonやサーバーの起動は不要です。実行するファイルはダウンロードしたHTMLです。現行HTMLのサイズは約82.5 MiBです。
 
@@ -28,7 +32,7 @@ CSV（和名付き日本語／英語キー）、選択領域FASTA、印刷にも
 
 ## 収録範囲と設定
 
-| 項目 | v2.14.1の内容 |
+| 項目 | v2.15.0の内容 |
 | --- | --- |
 | 対象領域 | 16S・12S・18S・COI |
 | 参照領域数 | 32,732記録 |
@@ -101,7 +105,8 @@ ForwardとReverseは、それぞれ独立して参照配列へ照合します。
 
 | 版 | 主な追加・修正 |
 | --- | --- |
-| [2.14.1](inventor_mutationum_2.14.1/inventor_mutationum_2.14.1.html) | Scle_12Sの1組2本を追加し、日英出典一覧へ論文情報を収録 |
+| [2.15.0](inventor_mutationum_2.15.0/inventor_mutationum_2.15.0.html) | 表示名をPriMatchへ変更し、日本語副題と公開入口を追加 |
+| [2.14.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.14.1/inventor_mutationum_2.14.1/inventor_mutationum_2.14.1.html) | Scle_12Sの1組2本を追加し、日英出典一覧へ論文情報を収録 |
 | [2.14.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.14.0/inventor_mutationum_2.14.0/inventor_mutationum_2.14.0.html) | BirT・uCeta・Ceph16S-M・V16S-U・MiDecaの5組10本を追加 |
 | [2.13.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.13.1/inventor_mutationum_2.13.1/inventor_mutationum_2.13.1.html) | 出典一覧をHTMLへ直接収録し、日本語・英語の単体閲覧に対応 |
 | [2.13.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.13.0/inventor_mutationum_2.13.0/inventor_mutationum_2.13.0.html) | 各学会目録・哺乳類Excelで和名1,039組を補完、計6,571組 |
@@ -125,10 +130,10 @@ ForwardとReverseは、それぞれ独立して参照配列へ照合します。
 
 ## 検証記録
 
-v2.14.1の保存済み検証では、ブラウザ24項目・整合性18項目が成功しています。追加2本を全32,732参照へ照合し、65,464件の計算完了を確認しました。これは実験での増幅性能の保証ではありません。
+v2.15.0では表示を確認し、埋込データと全スクリプトがv2.14.1と同一であることを確認しています。v2.14.1の保存済み検証では、ブラウザ24項目・整合性18項目が成功しています。追加2本を全32,732参照へ照合し、65,464件の計算完了を確認しました。これは実験での増幅性能の保証ではありません。
 
 ## このリポジトリの内容
 
-`main`の追跡対象は、現行版v2.14.1のHTMLと日英READMEの3ファイルです。過去の版はタグとコミット履歴に保持しています。元Excel、別添データ、ビルド用ソース、検証成果物、会話ログは配布対象に含めていません。出典の本文と追加プライマーの原資料情報は、現行HTML内で閲覧できます。
+`main`の追跡対象は、現行版v2.15.0のHTML、公開入口のindex.html、日英READMEの4ファイルです。過去の版はタグとコミット履歴に保持しています。元Excel、別添データ、ビルド用ソース、検証成果物、会話ログは配布対象に含めていません。出典の本文と追加プライマーの原資料情報は、現行HTML内で閲覧できます。
 
 計算・ファイル読込はブラウザ内で処理します。出典の外部リンクを開く操作では、リンク先のサイトへ移動します。

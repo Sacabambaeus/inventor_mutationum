@@ -1,16 +1,20 @@
-# Inventor_mutationum
+# PriMatch
 
 [日本語](README.md)
 
+**Visualizing primer–reference matches across taxa**
+
 A browser tool for comparing primers with reference sequences and inspecting identity, mutation patterns and taxonomic distributions. Reference data and alignment code are embedded in the HTML, so a downloaded HTML file runs offline on its own.
 
-**Current release: [v2.14.1](inventor_mutationum_2.14.1/inventor_mutationum_2.14.1.html)**
+**Current release: [v2.15.0](inventor_mutationum_2.15.0/inventor_mutationum_2.15.0.html)**
+
+[Open PriMatch online](https://sacabambaeus.github.io/inventor_mutationum/)
 
 ## Getting started
 
 1. On your own PC, download this repository using **Code → Download ZIP**.
 2. Extract the ZIP archive.
-3. Open `inventor_mutationum_2.14.1/inventor_mutationum_2.14.1.html` in a browser. Google Chrome has been used for validation.
+3. Open `inventor_mutationum_2.15.0/inventor_mutationum_2.15.0.html` in a browser. Google Chrome has been used for validation.
 
 No Python installation or local server is required. Run the downloaded HTML file. The current HTML is approximately 82.5 MiB.
 
@@ -28,7 +32,7 @@ Exports include CSV with Japanese labels or English keys, selected-region FASTA,
 
 ## Included data and settings
 
-| Item | v2.14.1 |
+| Item | v2.15.0 |
 | --- | --- |
 | Regions | 16S, 12S, 18S and COI |
 | Reference regions | 32,732 records |
@@ -101,7 +105,8 @@ Mammal-list citation, preserved in its supplied form:
 
 | Version | Main additions and fixes |
 | --- | --- |
-| [2.14.1](inventor_mutationum_2.14.1/inventor_mutationum_2.14.1.html) | Add Scle_12S, one pair/two primers, with bilingual embedded citation |
+| [2.15.0](inventor_mutationum_2.15.0/inventor_mutationum_2.15.0.html) | Rename display to PriMatch; add Japanese subtitle and stable public entry |
+| [2.14.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.14.1/inventor_mutationum_2.14.1/inventor_mutationum_2.14.1.html) | Add Scle_12S, one pair/two primers, with bilingual embedded citation |
 | [2.14.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.14.0/inventor_mutationum_2.14.0/inventor_mutationum_2.14.0.html) | Add BirT, uCeta, Ceph16S-M, V16S-U and MiDeca: 5 pairs / 10 primers |
 | [2.13.1](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.13.1/inventor_mutationum_2.13.1/inventor_mutationum_2.13.1.html) | Embed a bilingual standalone Sources panel |
 | [2.13.0](https://github.com/Sacabambaeus/inventor_mutationum/blob/v2.13.0/inventor_mutationum_2.13.0/inventor_mutationum_2.13.0.html) | Supplement 1,039 Japanese names from checklists and mammal Excel, reaching 6,571 |
@@ -125,10 +130,10 @@ Mammal-list citation, preserved in its supplied form:
 
 ## Validation record
 
-Saved v2.14.1 validation passed 24 browser checks and 18 integrity checks. The additional two primers completed 65,464 calls across all 32,732 references. This is computational validation, not a guarantee of experimental amplification.
+For v2.15.0, display was checked and all embedded data/scripts were verified identical to v2.14.1. Saved v2.14.1 validation passed 24 browser checks and 18 integrity checks. The additional two primers completed 65,464 calls across all 32,732 references. This is computational validation, not a guarantee of experimental amplification.
 
 ## Repository contents
 
-`main` tracks only three files: the current v2.14.1 HTML and the Japanese/English READMEs. Earlier versions are retained through tags and commit history. Original Excel workbooks, companion datasets, build source, validation artifacts and conversation logs are outside this distribution. The current HTML directly displays source descriptions and additional-primer provenance.
+`main` tracks four files: the current v2.15.0 HTML, the public index.html entry, and the Japanese/English READMEs. Earlier versions are retained through tags and commit history. Original Excel workbooks, companion datasets, build source, validation artifacts and conversation logs are outside this distribution. The current HTML directly displays source descriptions and additional-primer provenance.
 
 Calculation and file reading take place inside the browser. Following an external source link navigates to the respective website.
