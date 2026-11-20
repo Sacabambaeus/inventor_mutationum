@@ -561,6 +561,14 @@ self.onmessage=e=>{
     if(rows.length)save('taxon_matches_'+state.gene+'_'+state.chartRank+'.csv',exportCsv(rows,Object.keys(rows[0])));
   }
   function referenceFasta(records){return records.map(r=>'>'+r.id+' '+r.organism+' [accession='+r.accession+']\n'+r.sequence).join('\n')+'\n';}
+  // The taxonomy TSV sample and the built-in reference table are generated here, so the
+  // single HTML file needs no companion files.
+  const tsvCell=v=>String(v??'').replace(/[\t\r\n]+/g,' ');
+  function tsv(rows,fields){return [fields.join('\t'),...rows.map(r=>fields.map(f=>tsvCell(r[f])).join('\t'))].join('\n')+'\n';}
+  function taxonomyTemplate(){return tsv([{accession:'MY_SEQ_001',organism:'Oncorhynchus keta',phylum:'Chordata',class:'Actinopteri',order:'Salmoniformes',family:'Salmonidae',genus:'Oncorhynchus',species:'Oncorhynchus keta'}],['accession','organism',...RANKS.map(([r])=>r),'species']);}
+  function referencePanelTsv(){return tsv(data.records,['id','accession','gene','organism','species','taxid',...RANKS.map(([r])=>r),'genus_taxid','length','location','regionSource','source','retrieved','sampling','feature_index','sequence_sha256','partial','mitochondrial','sequence']);}
+  $('download-taxonomy-template').onclick=()=>save('taxonomy_template.tsv',taxonomyTemplate(),'text/tab-separated-values;charset=utf-8');
+  $('download-reference-panel').onclick=()=>save('reference_panel.tsv',referencePanelTsv(),'text/tab-separated-values;charset=utf-8');
   function save(name,text,type='text/csv;charset=utf-8'){const link=document.createElement('a'),url=URL.createObjectURL(new Blob([text],{type}));link.href=url;link.download=name;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
   const quote=v=>{let s=String(v??'');if(typeof v==='string'&&(/^[\s\u0000-\u001f\u007f-\u009f]*[=+\-@\uff1d\uff0b\uff0d\uff20]/u.test(s)||/^[\s\u0000-\u001f\u007f-\u009f]*[\t\r\n]/u.test(s)))s="'"+s;return /[,"\r\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};
   function csv(records,fields){return '\uFEFF'+[fields.map(quote).join(','),...records.map(r=>fields.map(f=>quote(r[f])).join(','))].join('\r\n')+'\r\n';}
