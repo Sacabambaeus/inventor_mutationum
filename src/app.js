@@ -52,6 +52,9 @@
   }
   const analysisRecords=()=>scopedRecords().filter(r=>!$('reference-phylum').value||r.phylum===$('reference-phylum').value);
   const builtinCache=new Map();
+  // An alignment depends only on the primer and target sequences; the thresholds only feed assess().
+  // Results are reused for the identical record list (same objects, order and sequences), see createResultCache.
+  const resultCache=A.createResultCache(LIMITS.resultCalls);
   const presetMode=()=>state.mode==='builtin'||state.mode==='legacy';
   function builtinCalls(primer){
     if(builtinCache.has(primer))return builtinCache.get(primer);
@@ -362,9 +365,9 @@
     if(state.worker||state.importing)stop();
     if(state.gene==='all'){state.records=data.records.map(r=>({...r}));state.runs={};}
     else{state.records=state.records.filter(r=>r.gene!==state.gene).concat(data.records.filter(r=>r.gene===state.gene).map(r=>({...r})));delete state.runs[state.gene];delete state.runs.all;}
-    state.activePrimer=null;resetFilters();$('run-status').textContent=regionLabel(state.gene)+': 内蔵参照に戻しました。';refresh();
+    resultCache.clear();state.activePrimer=null;resetFilters();$('run-status').textContent=regionLabel(state.gene)+': 内蔵参照に戻しました。';refresh();
   }
-  function clearInputs(){stop();state.records=data.records.map(r=>({...r}));state.runs={};state.activePrimer=null;state.dirty=false;for(const id of ['fasta-file','taxonomy-file'])$(id).value='';state.mode='custom';setPrimerRows([]);renderTemplateButtons();resetFilters();clearError();renderPrimerInfo();refresh();$('run-status').textContent='入力欄・追加参照・照合結果を消去し、内蔵参照に戻しました。';}
+  function clearInputs(){stop();state.records=data.records.map(r=>({...r}));state.runs={};resultCache.clear();state.activePrimer=null;state.dirty=false;for(const id of ['fasta-file','taxonomy-file'])$(id).value='';state.mode='custom';setPrimerRows([]);renderTemplateButtons();resetFilters();clearError();renderPrimerInfo();refresh();$('run-status').textContent='入力欄・追加参照・照合結果を消去し、内蔵参照に戻しました。';}
   function cpuThreads(){const n=Number(navigator.hardwareConcurrency);return Number.isFinite(n)&&n>=1?Math.min(512,Math.floor(n)):2;}
   function parallelism(totalWork,jobCount){
     const choice=$('parallel-count').value;
@@ -388,9 +391,11 @@
     jobs.sort((a,b)=>b.weight-a.weight||a.id-b.id);
     return {jobs,totalWork};
   }
-  function createAlignmentPool({records,primers,minIdentity,minCoverage,onProgress,onComplete,onError}){
+  // Workers receive only the primer and target sequences and return compact hits
+  // (PrimerAlign.alignBatch); record metadata is merged on the main thread by index.
+  function createAlignmentPool({records,primers,onProgress,onComplete,onError}){
     const {jobs,totalWork}=alignmentJobs(records,primers),size=parallelism(totalWork,jobs.length),total=records.length*primers.length;
-    const calls=new Array(total),slots=[];let next=0,finished=0,finishedCalls=0,closed=false,url=null,started=0,lastProgress=0;
+    const parts=new Array(jobs.length),slots=[];let next=0,finished=0,finishedCalls=0,closed=false,url=null,started=0,lastProgress=0;
     const pool={size,jobs:jobs.length,workers:[],terminate(){
       if(closed)return;closed=true;
       for(const w of pool.workers){w.onmessage=null;w.onerror=null;w.onmessageerror=null;w.terminate();}
@@ -399,15 +404,10 @@
       started=performance.now();
       const body=String.raw`
 self.onmessage=e=>{
-  const {jobId,primer:p,records,minIdentity,minCoverage}=e.data;
+  const {jobId,primer,targets}=e.data;
   try{
-    const calls=[];let done=0;
-    for(const r of records){
-      const h=PrimerAlign.align(p.sequence,r.sequence),assessment=PrimerAlign.assess(h,minIdentity,minCoverage),{sequence,...metadata}=r;
-      calls.push({...metadata,...h,...assessment,primer:p.name,primerSequence:p.sequence,confidence:assessment.passed&&!h.primerBulgeCount&&!h.targetBulgeCount&&!h.uncertainCount?'high':'review'});
-      done++;if(done%16===0)self.postMessage({jobId,progress:done});
-    }
-    self.postMessage({jobId,done:true,calls});
+    const result=PrimerAlign.alignBatch(primer,targets,done=>self.postMessage({jobId,progress:done}));
+    self.postMessage({jobId,done:true,result},[result.pattern.buffer,result.start.buffer,result.end.buffer,result.reverse.buffer,result.length.buffer]);
   }catch(error){self.postMessage({jobId,error:String(error.stack||error)});}
 };`;
       url=URL.createObjectURL(new Blob([$('alignment-engine').textContent,body],{type:'text/javascript'}));
@@ -422,15 +422,18 @@ self.onmessage=e=>{
               const d=e.data,j=slot.job;if(!j||d.jobId!==j.id)return;
               if(d.error){reject(d.error);return;}
               if(d.done){
-                if(!Array.isArray(d.calls)||d.calls.length!==j.end-j.start)throw Error('並列照合の結果件数が一致しません');
-                const offset=j.primerIndex*records.length+j.start;
-                for(let k=0;k<d.calls.length;k++)calls[offset+k]=d.calls[k];
-                finished++;finishedCalls+=d.calls.length;slot.job=null;slot.progress=0;
+                const r=d.result,count=j.end-j.start;
+                if(!r||!Array.isArray(r.patterns)||[r.pattern,r.start,r.end,r.reverse,r.length].some(a=>!ArrayBuffer.isView(a)||a.length!==count))throw Error('並列照合の結果件数が一致しません');
+                parts[j.id]=r;
+                finished++;finishedCalls+=count;slot.job=null;slot.progress=0;
                 progress(finished===jobs.length);
                 if(finished===jobs.length){
                   if(finishedCalls!==total)throw Error('並列照合の合計件数が一致しません');
+                  // Jobs of one primer cover consecutive record ranges; join them in record order.
+                  const results=primers.map((p,i)=>A.joinBatches(jobs.filter(x=>x.primerIndex===i).sort((a,b)=>a.start-b.start).map(x=>parts[x.id])));
+                  if(results.some(r=>r.pattern.length!==records.length))throw Error('並列照合の合計件数が一致しません');
                   const stats={workers:size,jobs:jobs.length,elapsedMs:performance.now()-started};
-                  pool.terminate();onComplete(calls,stats);
+                  pool.terminate();onComplete(results,stats);
                 }else dispatch(slot);
               }else if(d.progress!==undefined){
                 if(!Number.isFinite(d.progress)||d.progress<0||d.progress>j.end-j.start)throw Error('並列照合の進捗が不正です');
@@ -447,7 +450,7 @@ self.onmessage=e=>{
     function dispatch(slot){
       if(closed||next>=jobs.length)return;
       const j=jobs[next++];slot.job=j;slot.progress=0;
-      try{slot.worker.postMessage({jobId:j.id,primer:primers[j.primerIndex],records:records.slice(j.start,j.end),minIdentity,minCoverage});}
+      try{slot.worker.postMessage({jobId:j.id,primer:primers[j.primerIndex].sequence,targets:records.slice(j.start,j.end).map(r=>r.sequence)});}
       catch(error){reject(error);}
     }
     return pool;
@@ -461,27 +464,40 @@ self.onmessage=e=>{
       if(!Number.isFinite(minIdentity)||!Number.isFinite(minCoverage)||minIdentity<0||minIdentity>100||minCoverage<0||minCoverage>100)throw Error('閾値は0–100%にしてください');
       const primerBases=primers.reduce((sum,p)=>sum+p.sequence.length,0),work=GENES.map(g=>2*records.filter(r=>r.gene===g).reduce((sum,r)=>sum+r.sequence.length,0)*primerBases);
       if(work.some(cells=>cells>LIMITS.workCells))throw Error('照合量が上限を超えます。門を絞るか、プライマーを分けて実行してください');
-      const gene=state.gene;
-      const pool=createAlignmentPool({records,primers,minIdentity,minCoverage,
+      const gene=state.gene,results=new Map();
+      // Reuse alignments of this exact record list; align each new primer sequence once.
+      for(const p of primers)if(!results.has(p.sequence)){const stored=resultCache.get(records,p.sequence);if(stored)results.set(p.sequence,stored);}
+      const reused=primers.filter(p=>results.has(p.sequence)).length,pending=[...new Set(primers.map(p=>p.sequence))].filter(s=>!results.has(s)).map(sequence=>({sequence}));
+      const complete=execution=>{
+        const previous={runs:{...state.runs},activePrimer:state.activePrimer,mode:state.mode,dirty:state.dirty,filters:state.filters,limit:state.limit};
+        state.worker=null;updateBusy();
+        try{
+          // Merge hits with record metadata and judge them with the current thresholds.
+          const metadata=records.map(({sequence,...rest})=>rest),calls=new Array(records.length*primers.length);
+          primers.forEach((p,i)=>A.expandCalls(results.get(p.sequence),metadata,p,minIdentity,minCoverage,calls,i*records.length));
+          const completed={calls,primers,minIdentity,minCoverage,execution};
+          if(gene==='all')state.runs={all:completed};else{state.runs[gene]=completed;delete state.runs.all;}
+          state.activePrimer=primers[0].name;state.mode='custom';state.dirty=false;state.limit=1000;
+          refresh();
+          const head=`完了：${primers.length}本 × ${records.length}参照記録 · `,time=`${execution.workers}並列 · 計算 ${(execution.elapsedMs/1000).toFixed(2)}秒`;
+          $('run-status').textContent=head+(!reused?time:!execution.aligned?'保存済みの照合結果を再利用（再計算なし、現在の閾値で再判定）':`新規照合 ${execution.aligned}本・保存済みの照合結果を再利用 ${reused}本（現在の閾値で再判定） · `+time);
+        }catch(renderError){
+          state.runs=previous.runs;for(const key of ['activePrimer','mode','dirty','filters','limit'])state[key]=previous[key];
+          try{refresh();}catch{}$('run-status').textContent='表示処理に失敗しました。直前の結果を保持しています。';fail(renderError);
+        }
+      };
+      if(!pending.length){complete({workers:0,jobs:0,elapsedMs:0,aligned:0,reused});return;}
+      const pool=createAlignmentPool({records,primers:pending,
         onProgress(done,total){if(state.worker!==pool)return;$('progress').value=done;$('run-status').textContent=`${pool.size}並列で照合 ${done}/${total}`;},
-        onComplete(calls,execution){
+        onComplete(list,execution){
           if(state.worker!==pool)return;
-          const previous={runs:{...state.runs},activePrimer:state.activePrimer,mode:state.mode,dirty:state.dirty,filters:state.filters,limit:state.limit};
-          state.worker=null;updateBusy();
-          try{
-            const completed={calls,primers,minIdentity,minCoverage,execution};
-            if(gene==='all')state.runs={all:completed};else{state.runs[gene]=completed;delete state.runs.all;}
-            state.activePrimer=primers[0].name;state.mode='custom';state.dirty=false;state.limit=1000;
-            refresh();$('run-status').textContent=`完了：${primers.length}本 × ${records.length}参照記録 · ${execution.workers}並列 · 計算 ${(execution.elapsedMs/1000).toFixed(2)}秒`;
-          }catch(renderError){
-            state.runs=previous.runs;for(const key of ['activePrimer','mode','dirty','filters','limit'])state[key]=previous[key];
-            try{refresh();}catch{}$('run-status').textContent='表示処理に失敗しました。直前の結果を保持しています。';fail(renderError);
-          }
+          pending.forEach((p,i)=>{results.set(p.sequence,list[i]);resultCache.set(records,p.sequence,list[i]);});
+          complete({...execution,aligned:primers.length-reused,reused});
         },
         onError(error){if(state.worker!==pool)return;stop();fail(error);}
       });
-      state.worker=pool;startedWorker=pool;updateBusy();$('progress').value=0;$('progress').max=primers.length*records.length;
-      $('run-status').textContent=`${pool.size}並列で両方向を照合しています…`;pool.start();
+      state.worker=pool;startedWorker=pool;updateBusy();$('progress').value=0;$('progress').max=pending.length*records.length;
+      $('run-status').textContent=`${pool.size}並列で両方向を照合しています…`+(reused?`（${reused}本は保存済みの照合結果を再利用）`:'');pool.start();
     }catch(error){if(startedWorker&&state.worker===startedWorker)stop();fail(error);}
   }
   function parseFasta(text,gene){
@@ -535,7 +551,7 @@ self.onmessage=e=>{
       if(next.filter(r=>r.gene===gene).length>LIMITS.records||next.length>LIMITS.totalRecords)throw Error('参照件数は各領域20,000件、全領域80,000件以下にしてください');
       if(next.reduce((s,r)=>s+r.sequence.length,0)>LIMITS.totalBases)throw Error('全参照の合計が1億5000万ntを超えます');
       if(!current())return;
-      state.records=next;delete state.runs[gene];delete state.runs.all;state.activePrimer=null;state.mode='custom';resetFilters();$('run-status').textContent=`${gene}: ${records.length}配列を読み込みました。照合を実行してください。`;refresh();
+      state.records=next;delete state.runs[gene];delete state.runs.all;resultCache.clear();state.activePrimer=null;state.mode='custom';resetFilters();$('run-status').textContent=`${gene}: ${records.length}配列を読み込みました。照合を実行してください。`;refresh();
     }catch(error){if(token===null||token===state.importSerial){fail(error);if(token!==null)$('run-status').textContent='読込に失敗しました。入力形式と上限を確認してください。';}}
     finally{if(token!==null&&token===state.importSerial){state.importing=false;updateBusy();}}
   }
@@ -550,10 +566,10 @@ self.onmessage=e=>{
   function csv(records,fields){return '\uFEFF'+[fields.map(quote).join(','),...records.map(r=>fields.map(f=>quote(r[f])).join(','))].join('\r\n')+'\r\n';}
   function exportRecords(onlyIndeterminate=false){const fields=['gene','id','primer','primerSequence','primerDegenerateCount','primerVariants','primerDegeneratePositions','accession','organism',...RANKS.map(([r])=>r),'species','judgement','indeterminate','indeterminateReason','targetNCount','targetNPositions','unknownOpposedCount','identity','identityOptimistic','identityConservative','coveredMatches','possibleOnlyMatches','coverage','nonNCoverage','score','thresholdPassed','passed','perfect','literalExact','uncertainCount','targetAmbiguousPositions','mismatches','primerBulges','targetBulges','alignmentPrimer','alignmentTarget','searchStrand','bindingStart','bindingEnd','regionSource','source','taxid','genus_taxid','retrieved','location','feature_index','sequence_sha256','partial','mitochondrial'];const records=filteredCalls().filter(c=>!onlyIndeterminate||c.indeterminate);save(onlyIndeterminate?'primer_identity_indeterminate.csv':'primer_identity_records.csv',exportCsv(records,fields));}
   function exportPatterns(){const items=patterns(filteredCalls()).map((p,i)=>({pattern:i+1,group:state.group,gene:p.summary.gene,primer:p.summary.primer,primerSequence:p.summary.primerSequence,primerDegenerateCount:p.summary.primerDegenerateCount,primerVariants:p.summary.primerVariants,primerDegeneratePositions:p.summary.primerDegeneratePositions,n:p.calls.length,genera:genusCount(p.calls),score:p.score,identity:p.identity,identityConservative:p.summary.identityConservative,identityNote:'representative alignment; position grouping may include other identities',alignmentPrimer:p.summary.alignmentPrimer,alignmentTarget:p.summary.alignmentTarget,positionKey:p.summary.positionKey,baseVariants:new Set(p.calls.map(c=>JSON.stringify([c.alignmentPrimer,c.alignmentTarget]))).size}));if(items.length)save('primer_identity_patterns.csv',exportCsv(items,Object.keys(items[0])));}
-  $('reference-phylum').onchange=()=>{if(state.worker)stop();$('run-status').textContent='対象の門の変更は未反映です。「入力配列で照合」を実行してください。';};
+  $('reference-phylum').onchange=()=>{if(state.worker)stop();$('run-status').textContent='対象の門の変更は未反映です。「照合する」を押してください。';};
   $('run').onclick=run;$('cancel').onclick=stop;$('import').onclick=importData;
   $('reset-data').onclick=resetData;$('clear-inputs').onclick=clearInputs;
-  ['min-identity','min-coverage'].forEach(id=>$(id).addEventListener('input',()=>{state.dirty=true;$('run-status').textContent='入力変更は未反映です。「入力配列で照合」を実行してください。';}));
+  ['min-identity','min-coverage'].forEach(id=>$(id).addEventListener('input',()=>{state.dirty=true;$('run-status').textContent='入力変更は未反映です。「照合する」を押してください。';}));
   $('group-mode').onchange=e=>{state.group=e.target.value;state.limit=1000;renderResults();};$('sort').onchange=e=>{state.sort=e.target.value;renderResults();};
   $('reset-filters').onclick=()=>{resetFilters();refresh();};$('aggregate-rank').onchange=()=>{state.chartRank=$('aggregate-rank').value;state.chartLimit=200;renderTaxonomy(filteredCalls());};
   $('chart-unit').onchange=()=>{state.chartUnit=$('chart-unit').value;state.chartLimit=200;renderMatchChart(filteredCalls());};
@@ -565,7 +581,7 @@ self.onmessage=e=>{
   $('more').onclick=()=>{state.limit+=1000;renderResults();};$('close').onclick=()=>$('dialog').close();$('dialog').addEventListener('click',e=>{if(e.target===$('dialog'))$('dialog').close();});
   $('export-records').onclick=()=>exportRecords();$('export-indeterminate').onclick=()=>exportRecords(true);$('export-patterns').onclick=exportPatterns;$('export-reference').onclick=()=>save('reference_'+state.gene+'.fasta',referenceFasta(scopedRecords()),'text/plain;charset=utf-8');$('print').onclick=()=>window.print();
   // Small diagnostic API used by the reproducible browser tests; no network hooks.
-  window.PrimerViewer={state,MIMAMMAL_PAIRS,cpuThreads,parallelism,alignmentJobs,availableRun,scopedRecords,analysisRecords,readPrimerTable,setPrimerRows,TEMPLATES,selectGene,refresh,parsePrimers,parseFasta,parseTaxonomy,filteredCalls,patterns,taxonomyTree,taxonMatches,chartRows,renderTaxonomy,run,importData,stop,resetData,clearInputs,taxonLabel,nameEntry,organismLabel,exportCsv,CSV_HEADERS,LIMITS,referenceFasta};
+  window.PrimerViewer={state,resultCache,MIMAMMAL_PAIRS,cpuThreads,parallelism,alignmentJobs,availableRun,scopedRecords,analysisRecords,readPrimerTable,setPrimerRows,TEMPLATES,selectGene,refresh,parsePrimers,parseFasta,parseTaxonomy,filteredCalls,patterns,taxonomyTree,taxonMatches,chartRows,renderTaxonomy,run,importData,stop,resetData,clearInputs,taxonLabel,nameEntry,organismLabel,exportCsv,CSV_HEADERS,LIMITS,referenceFasta};
 
   function syncLimit(id,value){const s=$(id),key=value===Number.MAX_SAFE_INTEGER?'all':String(value);if(![...s.options].some(o=>o.value===key)){const o=add(s,'option',value.toLocaleString());o.value=key;}s.value=key;}
   $('advanced-toggle').onclick=()=>togglePanel('advanced-toggle','advanced-panel');
