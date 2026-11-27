@@ -39,7 +39,7 @@
     runs:{},activePrimer:null,group:'base',sort:'score',view:'cards',limit:1000,worker:null,importing:false,importSerial:0,records:data.records.map(r=>({...r})),dirty:false,
     chartRank:'phylum',chartUnit:'genus',chartQuery:'',chartSort:'matched',chartLimit:200};
   function add(parent,tag,text,cls){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;parent.append(n);return n;}
-  function button(parent,text,active,fn){const b=add(parent,'button',text);b.type='button';b.setAttribute('aria-selected',String(active));b.onclick=fn;return b;}
+  function button(parent,text,active,fn){const b=add(parent,'button',text);b.type='button';b.setAttribute('aria-pressed',String(active));b.onclick=fn;return b;}
   function fail(error){$('error').hidden=false;$('error').textContent=String(error.message||error);}
   function clearError(){$('error').hidden=true;}
   function resetFilters(){state.filters={};state.limit=1000;}
@@ -103,10 +103,10 @@
       if(depth>0&&!state.filters[RANKS[depth-1][0]]){add(tabs,'span','先に'+RANKS[depth-1][1]+'を選択してください。','note');return;}
       const prefix=base.filter(c=>RANKS.slice(0,depth).every(([r])=>!state.filters[r]||norm(c[r])===state.filters[r]));
       const select=value=>{if(value)state.filters[rank]=value;else delete state.filters[rank];RANKS.slice(depth+1).forEach(([r])=>delete state.filters[r]);if(pending&&rank==='phylum')$('reference-phylum').value=value||'';state.limit=1000;refresh();};
-      button(tabs,'すべて · '+unit+prefix.length,!state.filters[rank],()=>select(null));
+      button(tabs,'すべて · '+unit+prefix.length.toLocaleString(),!state.filters[rank],()=>select(null));
       const counts=new Map();prefix.forEach(c=>counts.set(norm(c[rank]),(counts.get(norm(c[rank]))||0)+1));
       if(state.filters[rank]&&!counts.has(state.filters[rank]))counts.set(state.filters[rank],0);
-      [...counts].sort((a,b)=>a[0].localeCompare(b[0])).forEach(([name,count])=>button(tabs,taxonLabel(rank,name)+' · '+unit+count,state.filters[rank]===name,()=>select(name)));
+      [...counts].sort((a,b)=>a[0].localeCompare(b[0])).forEach(([name,count])=>button(tabs,taxonLabel(rank,name)+' · '+unit+count.toLocaleString(),state.filters[rank]===name,()=>select(name)));
     });
   }
   function patternKey(c){return JSON.stringify([c.gene,state.group==='position'?c.positionKey:[c.alignmentPrimer,c.alignmentTarget]]);}
@@ -164,7 +164,7 @@
     syncLimit('chart-limit',state.chartLimit);const depth=RANKS.findIndex(([r])=>r===state.chartRank),allowed=[...RANKS.slice(depth+1).map(([r])=>r),'records'];
     if(!allowed.includes(state.chartUnit))state.chartUnit=allowed.includes('genus')?'genus':'records';
     const tabs=$('taxon-rank-tabs');tabs.replaceChildren();
-    RANKS.forEach(([rank,label],index)=>{const b=button(tabs,label,rank===state.chartRank,()=>{state.chartRank=rank;state.chartLimit=200;state.chartQuery='';$('chart-search').value='';$('aggregate-rank').value=rank;renderTaxonomy(filteredCalls());tabs.querySelector('[aria-selected="true"]').focus({preventScroll:true});});b.id='chart-rank-'+rank;b.setAttribute('role','tab');b.setAttribute('aria-controls','taxon-chart-panel');b.tabIndex=rank===state.chartRank?0:-1;b.onkeydown=e=>{let next;if(e.key==='ArrowRight')next=(index+1)%RANKS.length;else if(e.key==='ArrowLeft')next=(index+RANKS.length-1)%RANKS.length;else if(e.key==='Home')next=0;else if(e.key==='End')next=RANKS.length-1;else return;e.preventDefault();tabs.querySelectorAll('button')[next].click();};});
+    RANKS.forEach(([rank,label],index)=>{const b=button(tabs,label,rank===state.chartRank,()=>{state.chartRank=rank;state.chartLimit=200;state.chartQuery='';$('chart-search').value='';$('aggregate-rank').value=rank;renderTaxonomy(filteredCalls());tabs.querySelector('[aria-selected="true"]').focus({preventScroll:true});});b.id='chart-rank-'+rank;b.setAttribute('role','tab');b.removeAttribute('aria-pressed');b.setAttribute('aria-selected',String(rank===state.chartRank));b.setAttribute('aria-controls','taxon-chart-panel');b.tabIndex=rank===state.chartRank?0:-1;b.onkeydown=e=>{let next;if(e.key==='ArrowRight')next=(index+1)%RANKS.length;else if(e.key==='ArrowLeft')next=(index+RANKS.length-1)%RANKS.length;else if(e.key==='Home')next=0;else if(e.key==='End')next=RANKS.length-1;else return;e.preventDefault();tabs.querySelectorAll('button')[next].click();};});
     $('taxon-chart-panel').setAttribute('aria-labelledby','chart-rank-'+state.chartRank);
     const selector=$('chart-unit'),saved=state.chartUnit;selector.replaceChildren();
     allowed.forEach(unit=>{const o=add(selector,'option',unit==='records'?'参照配列数':RANKS.find(([r])=>r===unit)[1]+'数');o.value=unit;});selector.value=saved;
@@ -209,14 +209,14 @@
     stat(state.mode==='legacy'?'旧版の成功呼出し n':'照合対象の参照記録 n',calls.length);stat('条件を満たす配列数',passed.length);stat('完全一致の配列数',calls.filter(c=>c.perfect).length);stat('変異パターン数',items.length);
     stat('判定不能 n（標的N）',calls.filter(c=>c.indeterminate).length);stat('条件に届かない配列数',calls.filter(c=>c.judgement==='below_threshold').length);
     const run=availableRun(),name=presetMode()?state.legacyPrimer:state.activePrimer||'未照合';
-    $('status').textContent=`${regionLabel(state.gene)} / ${name} / n=${calls.length} / 属数=${genusCount(calls)} / ${state.group==='base'?'塩基種別':'位置のみ'} / ${state.mode==='builtin'?'内蔵参照・6門を同条件で計算：一致率≥60%、被覆率≥80%':state.mode==='legacy'?'旧部位・元スコアを保持（標的Nの判定は更新）':run?'新計算：一致率≥'+run.minIdentity+'%、被覆率≥'+run.minCoverage+'%':'プライマーを入力して「照合」を実行してください。'}\n${calls.length?'':'現在の条件に該当する結果はありません。'}`;
+    $('status').textContent=`${regionLabel(state.gene)} / ${name} / n=${calls.length.toLocaleString()} / 属数=${genusCount(calls).toLocaleString()} / ${state.group==='base'?'塩基種別':'位置のみ'} / ${state.mode==='builtin'?'内蔵参照・6門を同条件で計算：一致率≥60%、被覆率≥80%':state.mode==='legacy'?'旧部位・元スコアを保持（標的Nの判定は更新）':run?'新計算：一致率≥'+run.minIdentity+'%、被覆率≥'+run.minCoverage+'%':'プライマーを入力して「照合する」を押してください。'}\n${calls.length?'':'現在の条件に該当する結果はありません。'}`;
     $('current-region').textContent='対象領域：'+regionLabel(state.gene);
     $('status').textContent+='\n判定不能（採用整列に標的Nあり）='+calls.filter(c=>c.indeterminate).length+'件。通常の変異パターンから分離し、記録表・CSV・分類集計に保持しています。';
     $('grid').replaceChildren();$('record-view').replaceChildren();$('grid').hidden=state.view!=='cards';$('record-view').hidden=state.view==='cards';
     if(state.view==='cards')items.slice(0,state.limit).forEach((p,index)=>{
       const c=p.summary,complete=p.calls.length>0&&p.calls.every(x=>x.perfect===true),card=add($('grid'),'article',undefined,'tile'+(p.calls.some(x=>x.confidence==='review')?' review':'')+(complete?' perfect-match':''));
       card.tabIndex=0;card.setAttribute('role','button');card.dataset.patternKey=p.key;
-      const heading=add(card,'h3'),title=add(heading,'span',c.legacy?'旧パターンP'+c.patternId:'変異パターン '+(index+1));if(state.gene==='all')add(title,'span',' · '+c.gene,'region-badge');if(complete)add(title,'span','完全一致','match-badge');add(heading,'span',p.calls.length+'件 · '+genusCount(p.calls)+'属');
+      const heading=add(card,'h3'),title=add(heading,'span',c.legacy?'旧パターンP'+c.patternId:'変異パターン '+(index+1));if(state.gene==='all')add(title,'span',' · '+c.gene,'region-badge');if(complete)add(title,'span','完全一致','match-badge');add(heading,'span',p.calls.length.toLocaleString()+'件 · '+genusCount(p.calls).toLocaleString()+'属');
       add(card,'p',`スコア=${p.score} · 一致率 ${c.identity.toFixed(1)}% · ${confidenceLabel(c)}`);alignment(card,c);
       add(card,'p',`不一致 ${c.mismatches} / P突出 ${c.primerBulges} / T突出 ${c.targetBulges}`);
       if(state.group==='position')add(card,'p','位置統合：塩基種 '+new Set(p.calls.map(x=>JSON.stringify([x.alignmentPrimer,x.alignmentTarget]))).size+'通り（図は一例）');
@@ -232,11 +232,11 @@
     renderTaxonomy(calls);
     ['export-records','export-patterns'].forEach(id=>$(id).disabled=!calls.length);
     $('export-indeterminate').disabled=!calls.some(c=>c.indeterminate);
-    $('view-cards').setAttribute('aria-selected',String(state.view==='cards'));$('view-table').setAttribute('aria-selected',String(state.view==='table'));
-    $('view-indeterminate').setAttribute('aria-selected',String(state.view==='indeterminate'));
+    $('view-cards').setAttribute('aria-pressed',String(state.view==='cards'));$('view-table').setAttribute('aria-pressed',String(state.view==='table'));
+    $('view-indeterminate').setAttribute('aria-pressed',String(state.view==='indeterminate'));
   }
   function taxonomyTree(calls){const root={count:0,children:new Map()};calls.forEach(c=>{let node=root;node.count++;RANKS.forEach(([rank,label])=>{const name=norm(c[rank]);if(!node.children.has(name))node.children.set(name,{count:0,children:new Map(),name,label,rank});node=node.children.get(name);node.count++;});});return root;}
-  function appendTree(parent,node){const ul=add(parent,'ul',undefined,'tree');[...node.children.values()].sort((a,b)=>a.name.localeCompare(b.name)).forEach(child=>{const li=add(ul,'li');add(li,'span',child.label+' '+taxonLabel(child.rank,child.name)+' ');add(li,'b','n='+child.count);if(child.children.size)appendTree(li,child);});}
+  function appendTree(parent,node){const ul=add(parent,'ul',undefined,'tree');[...node.children.values()].sort((a,b)=>a.name.localeCompare(b.name)).forEach(child=>{const li=add(ul,'li');add(li,'span',child.label+' '+taxonLabel(child.rank,child.name)+' ');add(li,'b','n='+child.count.toLocaleString());if(child.children.size)appendTree(li,child);});}
   function detail(c){
     const box=$('detail');box.replaceChildren();add(box,'h3',organismLabel(c));add(box,'p',RANKS.map(([r])=>taxonLabel(r,c[r])).join(' > '));alignment(box,c,true);
     add(box,'p','P/Tは同方向比較。B3′は物理的な対向鎖。Tの逆相補が対向鎖の注文表記です。','note');
@@ -256,7 +256,7 @@
   }
   function openPattern(p){
     $('dialog-title').textContent=`${p.summary.gene} / ${p.summary.primer} / ${p.summary.legacy?'P'+p.summary.patternId:'変異パターン'}`;
-    $('dialog-summary').textContent=`n=${p.calls.length} · 属数=${genusCount(p.calls)} · 不一致数=${p.summary.mismatchCount} · P側突出数=${p.summary.primerBulgeCount} · T側突出数=${p.summary.targetBulgeCount}`;
+    $('dialog-summary').textContent=`n=${p.calls.length.toLocaleString()} · 属数=${genusCount(p.calls).toLocaleString()} · 不一致数=${p.summary.mismatchCount} · P側突出数=${p.summary.primerBulgeCount} · T側突出数=${p.summary.targetBulgeCount}`;
     if(p.summary.indeterminate)$('dialog-summary').textContent+=' · 判定不能（標的N '+p.summary.targetNCount+'塩基）';
     $('tree').replaceChildren();appendTree($('tree'),taxonomyTree(p.calls));$('members').replaceChildren();
     const members=[...p.calls].sort((a,b)=>RANKS.map(([r])=>norm(a[r])).join('\t').localeCompare(RANKS.map(([r])=>norm(b[r])).join('\t'))||a.accession.localeCompare(b.accession));
@@ -345,7 +345,7 @@
       const selected=state.selectedTemplates.includes(template.id);
       const b=button(parent,template.name,selected,()=>toggleTemplate(template));
       if(template.description)b.title=template.description;
-      b.id='template-'+template.id;b.setAttribute('aria-pressed',String(selected));
+      b.id='template-'+template.id;
     }
   }
   function renderPrimerInfo(){
@@ -479,7 +479,7 @@ self.onmessage=e=>{
           if(gene==='all')state.runs={all:completed};else{state.runs[gene]=completed;delete state.runs.all;}
           state.activePrimer=primers[0].name;state.mode='custom';state.dirty=false;state.limit=1000;
           refresh();
-          const head=`完了：${primers.length}本 × ${records.length}参照記録 · `,time=`${execution.workers}並列 · 計算 ${(execution.elapsedMs/1000).toFixed(2)}秒`;
+          const head=`完了：${primers.length}本 × ${records.length.toLocaleString()}参照記録 · `,time=`${execution.workers}並列 · 計算 ${(execution.elapsedMs/1000).toFixed(2)}秒`;
           $('run-status').textContent=head+(!reused?time:!execution.aligned?'保存済みの照合結果を再利用（再計算なし、現在の閾値で再判定）':`新規照合 ${execution.aligned}本・保存済みの照合結果を再利用 ${reused}本（現在の閾値で再判定） · `+time);
         }catch(renderError){
           state.runs=previous.runs;for(const key of ['activePrimer','mode','dirty','filters','limit'])state[key]=previous[key];
